@@ -24,6 +24,6 @@ Clone repo, `npm i`, alter `.env.sample` into `.env` and make any needed changes
 
 To run tests, after running `npm i`, run the command `npm test`
 
-#### UML
+<!-- #### UML
 
-![UML](./assets/uml.png)
+![UML](./assets/uml.png) -->
