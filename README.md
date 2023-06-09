@@ -12,6 +12,7 @@
 - Ike Steoger
 
 ### Problem Domain
+The problem we’re solving is the need for a secure and efficient database application that can handle large amounts of demographic data, simplify the process of collecting this information, and provide easy querying for Helen House, a rural LGBTQ+ youth center. This solution will not only digitize their current paper-based data collection but also enhance data accuracy, accessibility, and the ability to generate insights for grant applications. 
 
 ### Links and Resources
 
