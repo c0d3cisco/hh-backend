@@ -14,7 +14,7 @@
 ### Problem Domain
 
 ### Links and Resources
-
+- [Trello](https://trello.com/invite/b/KisbuKmx/ATTI8636c0c7dd7edb956f96bd8d8b9555f89A203B63/agile-board-template-trello)
 - [GitHub Actions ci/cd](https://github.com/MissionDrivenDevs/helen-house-backend/actions)
 - [Team Agreement](./teamAgreement.md)
 <!-- - [back-end dev server url]() -->
