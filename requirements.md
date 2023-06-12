@@ -77,11 +77,19 @@ Overall, this tool is crucial for enhancing operational efficiency, promoting da
 ## Minimum Viable Product
 *What will your MVP functionality be?*
 
-1.	**Customized User Profiles**: The web app will allow children to personalize their user profiles with their name, favorite color, and favorite animal, making the experience more engaging and tailored to their preferences.
-2.	**Physics Game**: The web app will provide a fun and interactive physics game for children to learn about physics concepts in an engaging and age-appropriate manner.
-3.	**Video Page**: The web app will offer a video page where children can click on images to play age-appropriate videos about specific topics, enhancing their learning through visually appealing content.
-4.	**Progress Report for Parents**: The web app will include a progress report feature that allows parents to monitor their child's interaction with the app, providing insights into their learning progress and engagement.
-5.	**Delightful User Experience**: The web app will create a delightful user experience with animations, transitions, and audio, ensuring that the app is visually and audibly engaging for young learners.
+The MVP (Minimum Viable Product) for this project will include the following functionality:
+
+1. **Secure Backend for Member Intake Form**: The MVP will include a secure backend system to store and manage data from the member intake form. This will include basic CRUD (Create, Read, Update, Delete) operations to ensure the data can be effectively managed.
+
+    - **Authentication (Auth)**: The system will include administrative access controls to ensure only authorized personnel can access the member intake data.
+    - **Query Demographic Info**: The MVP will lay the groundwork for admins to query demographic information, enabling them to generate reports and derive insights from the data once the front end is completed.
+
+2. **Secure Backend for Daily Youth Count**: The MVP will also include a backend system for daily youth count, keeping track of member check-ins and check-outs.
+
+    - **Authentication (Auth)**: Similar to the member intake form system, the daily youth count feature will be protected by admin access controls.
+    - **Member Check-In**: The system will record and manage member check-ins, capturing key data like time, date, and reported mood of members.
+
+This MVP focuses on establishing a robust and secure data management system, setting a solid foundation for future expansion and features.
 
 ## Stretch
 *What stretch goals are you going to aim for?*
