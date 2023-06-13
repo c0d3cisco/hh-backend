@@ -7,11 +7,11 @@ const basicAuth = require('../auth/middleware/basic');
 const bearerAuth = require('../auth/middleware/bearer');
 const acl = require('../auth/middleware/acl');
 
-
 const router = express.Router();
 
 router.param('model', (req, res, next) => {
   const modelName = req.params.model;
+  console.log(modelName);
   if (dataModules[modelName]) {
     req.model = dataModules[modelName];
     next();
@@ -20,12 +20,18 @@ router.param('model', (req, res, next) => {
   }
 });
 
+// TODO: ROUTES WHEN AUTH IS WORKING
 router.get('/:model', basicAuth, handleGetAll);
 router.get('/:model/:id', basicAuth, handleGetOne);
 router.post('/:model', bearerAuth, acl('create'), handleCreate);
-router.patch('/:model', bearerAuth, acl('update'), handleUpdate);
 router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
 router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
+
+// router.get('/:model', handleGetAll);
+// router.get('/:model/:id', handleGetOne);
+// router.post('/:model', handleCreate);
+// router.put('/:model/:id', handleUpdate);
+// router.delete('/:model/:id', handleDelete);
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();
@@ -50,7 +56,7 @@ async function handleCreate(req, res, next) {
   } catch(e){
     next(e.message || e);
   }
-  
+
 }
 
 async function handleUpdate(req, res, next) {
@@ -58,7 +64,7 @@ async function handleUpdate(req, res, next) {
     const id = req.params.id;
     const obj = req.body;
     let updatedRecord = await req.model.update(id, obj);
-    res.status(200).json(updatedRecord);   
+    res.status(200).json(updatedRecord);
   } catch(e){
     next(e.message || e);
   }
