@@ -17,12 +17,14 @@ const userAuth = userAuthModel(sequelize, DataTypes);
 userAuth.hasMany(checkin);
 checkin.belongsTo(userAuth);
 
-userAuth.hasMany(users);
+userAuth.hasOne(users);
 users.belongsTo(userAuth);
 
 module.exports = {
   db: sequelize,
+  checkin,
   checkinData: new Collection(checkin),
+  users,
   userData: new Collection(users),
   userAuth,
   userAuthModel: new Collection(userAuth),
