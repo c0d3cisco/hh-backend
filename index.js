@@ -21,4 +21,4 @@ async function initializeDatabase() {
   }
 }
 // Comment this in when you want to clear the DB, all of it
-// initializeDatabase();
+initializeDatabase();
