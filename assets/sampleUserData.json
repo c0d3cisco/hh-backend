@@ -1,8 +1,5 @@
 {
   "admin": {
-    "username": "admin",
-    "password": "adminpassword",
-    "role": "admin",
     "first_name": "Admin",
     "last_name": "User",
     "preferred_name": null,
@@ -62,9 +59,6 @@
     "intakeNotes": null
   },
   "staff1": {
-    "username": "staff1",
-    "password": "staff1password",
-    "role": "staff",
     "first_name": "Staff",
     "last_name": "User1",
     "preferred_name": null,
@@ -124,9 +118,6 @@
     "intakeNotes": null
   },
   "staff2": {
-    "username": "staff2",
-    "password": "staff2password",
-    "role": "staff",
     "first_name": "Staff",
     "last_name": "User2",
     "preferred_name": null,
@@ -186,9 +177,6 @@
     "intakeNotes": null
   },
   "user1": {
-    "username": "sample_user1",
-    "password": "sample_password",
-    "role": "user",
     "first_name": "John",
     "last_name": "Doe",
     "preferred_name": "JD",
@@ -248,9 +236,6 @@
     "intakeNotes": "Sample intake notes"
   },
   "user2": {
-    "username": "sample_user2",
-    "password": "sample_password",
-    "role": "user",
     "first_name": "Jane",
     "last_name": "Smith",
     "preferred_name": "JS",
@@ -310,9 +295,6 @@
     "intakeNotes": "Sample intake notes"
   },
   "user3": {
-    "username": "sample_user3",
-    "password": "sample_password",
-    "role": "user",
     "first_name": "Michael",
     "last_name": "Johnson",
     "preferred_name": "MJ",
@@ -372,9 +354,6 @@
     "intakeNotes": "Sample intake notes"
   },
   "user4": {
-    "username": "sample_user4",
-    "password": "sample_password",
-    "role": "user",
     "first_name": "Emily",
     "last_name": "Wilson",
     "preferred_name": "EW",
@@ -434,9 +413,6 @@
     "intakeNotes": "Sample intake notes"
   },
   "user5": {
-    "username": "sample_user5",
-    "password": "sample_password",
-    "role": "user",
     "first_name": "Alex",
     "last_name": "Martinez",
     "preferred_name": "AM",
