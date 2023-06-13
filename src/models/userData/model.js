@@ -1,6 +1,7 @@
 'use strict';
 
 const userModel = (sequelize, DataTypes) => sequelize.define('userData', {
+  UserId: {type: DataTypes.INTEGER, required: true, unique: true},
   first_name: { type: DataTypes.STRING, required: true },
   last_name: { type: DataTypes.STRING, required: false },
   preferred_name: { type: DataTypes.STRING, required: false },
