@@ -10,6 +10,7 @@ db.sync().then(() => {
   app.start(PORT || 3001);
 });
 
+// !Remove this before deploying
 async function initializeDatabase() {
   try {
     // Synchronize the Regions model with the database table
