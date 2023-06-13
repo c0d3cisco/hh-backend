@@ -12,6 +12,7 @@ const authRoutes = require('./auth/routes.js');
 const logger = require('./middleware/logger.js');
 // TODO Update Routes
 const Routes = require('./routes/index.js');
+const { userAuthModel, userData } = require('./models/index.js');
 
 // Prepare the express app
 const app = express();
@@ -26,7 +27,12 @@ app.use(logger);
 
 // Routes
 app.use(authRoutes);
-app.use('/', Routes);
+app.use('/hh', Routes);
+
+app.get('/UserWithData', async (req, res, next)=> {
+  const user = await userAuthModel.readWithAssociations(userData);
+  res.status(200).send(user);
+});
 
 
 // proof of life
