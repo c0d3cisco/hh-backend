@@ -10,6 +10,7 @@ const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const authRoutes = require('./auth/routes.js');
 const logger = require('./middleware/logger.js');
+// TODO Update Routes
 const v1Routes = require('./routes/v1.js');
 const v2Routes = require('./routes/v2.js');
 
