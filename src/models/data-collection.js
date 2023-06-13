@@ -1,9 +1,8 @@
 'use strict';
 
-// THIS IS THE STRETCH GOAL ...
-// It takes in a schema in the constructor and uses that instead of every collection
-// being the same and requiring their own schema. That's not very DRY!
-
+const { userData } = require('.');
+const encryptAndStoreUserData = require('./userData/encrypt');
+const decryptAndRetrieveUserData = require('./userData/decrypt');
 class DataCollection {
 
   constructor(model) {
@@ -20,7 +19,12 @@ class DataCollection {
   }
 
   create(record) {
-    return this.model.create(record);
+    // If the model is userData, encrypt and store the record in the database, else create the record
+    if (this.model === userData) {
+      return encryptAndStoreUserData(record);
+    } else {
+      return this.model.create(record);
+    }
   }
 
   async update(id, data) {
@@ -30,25 +34,31 @@ class DataCollection {
   }
 
   delete(id) {
-    return this.model.destroy({ where: { id }});
+    return this.model.destroy({ where: { id } });
   }
 
-  async readWithAssociations(associatedModel, id = null){
+  async readWithAssociations(associatedModel, id = null) {
     try {
-      if(id){
+      if (id) {
         return await this.model.findAll({
-          include: {model: associatedModel},
-          where: {id: id},
+          include: { model: associatedModel },
+          where: { id: id },
         });
       } else {
-        return await this.model.findAll({include: {model: associatedModel}});
+        return await this.model.findAll({ include: { model: associatedModel } });
       }
     } catch (error) {
       console.error('ModelInterface isn\'t reading', error);
       return error;
     }
   }
-
+  
+  async retrieveDecryptedUserData() {
+    if (this.model === userData) {
+      return decryptAndRetrieveUserData();
+    }
+    return null;
+  }
 }
 
 module.exports = DataCollection;
