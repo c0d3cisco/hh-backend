@@ -9,12 +9,21 @@ const Collection = require('./data-collection.js');
 const DATABASE_URL = process.env.DATABASE_URL || 'sqlite:memory:';
 
 const sequelize = new Sequelize(DATABASE_URL);
+
 const checkin = checkinModel(sequelize, DataTypes);
 const users = userModel(sequelize, DataTypes);
+const userAuth = userAuthModel(sequelize, DataTypes);
+
+userAuth.hasMany(checkin);
+checkin.belongsTo(userAuth);
+
+userAuth.hasMany(users);
+users.belongsTo(userAuth);
 
 module.exports = {
   db: sequelize,
   checkinData: new Collection(checkin),
   userData: new Collection(users),
-  userAuth: userAuthModel(sequelize, DataTypes),
+  userAuth,
+  userAuthModel: new Collection(userAuth),
 };

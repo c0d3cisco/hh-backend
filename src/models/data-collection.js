@@ -33,6 +33,22 @@ class DataCollection {
     return this.model.destroy({ where: { id }});
   }
 
+  async readWithAssociations(associatedModel, id = null){
+    try {
+      if(id){
+        return await this.model.findAll({
+          include: {model: associatedModel},
+          where: {id: id},
+        });
+      } else {
+        return await this.model.findAll({include: {model: associatedModel}});
+      }
+    } catch (error) {
+      console.error('ModelInterface isn\'t reading', error);
+      return error;
+    }
+  }
+
 }
 
 module.exports = DataCollection;
