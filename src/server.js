@@ -11,8 +11,7 @@ const errorHandler = require('./error-handlers/500.js');
 const authRoutes = require('./auth/routes.js');
 const logger = require('./middleware/logger.js');
 // TODO Update Routes
-const v1Routes = require('./routes/v1.js');
-const v2Routes = require('./routes/v2.js');
+const Routes = require('./routes/index.js');
 
 // Prepare the express app
 const app = express();
@@ -27,8 +26,8 @@ app.use(logger);
 
 // Routes
 app.use(authRoutes);
-app.use('/api/v1', v1Routes);
-app.use('/api/v2', v2Routes);
+app.use('/', Routes);
+
 
 // proof of life
 app.get('/', (req, res, next) => {

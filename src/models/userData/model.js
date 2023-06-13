@@ -7,7 +7,7 @@ const SECRET = process.env.SECRET || 'secretstring';
 
 const userModel = (sequelize, DataTypes) =>{
 
-  const model = sequelize.define('Users', {
+  const model = sequelize.define('userData', {
     username: { type: DataTypes.STRING, required: true, unique: true },
     password: { type: DataTypes.STRING, required: true },
     role: { type: DataTypes.ENUM('user', 'admin'), required: true, defaultValue: 'user' },
