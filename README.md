@@ -19,11 +19,14 @@ The problem we’re solving is the need for a secure and efficient database appl
 
 - [Trello](https://trello.com/invite/b/KisbuKmx/ATTI8636c0c7dd7edb956f96bd8d8b9555f89A203B63/agile-board-template-trello)
 - [GitHub Actions ci/cd](https://github.com/MissionDrivenDevs/helen-house-backend/actions)
+- [UML & Wireframe Figjam](https://www.figma.com/file/3gpv4BCuYd3Oa3jwod3ynt/Helen-House-Backend?type=whiteboard&node-id=0-1&t=eQPdLm5eGrAcrUL8-0)
 - [Team Agreement](./teamAgreement.md)
+- [Requirements](./requirements.md)
 <!-- - [back-end dev server url]() -->
 <!-- - [back-end prod server url]() -->
 
 ### Collaborators
+
 
 ### Setup
 
