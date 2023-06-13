@@ -19,5 +19,5 @@ async function initializeDatabase() {
     console.error('Error occurred while syncing all models.', error);
   }
 }
-// Comment this in when you want to clear the DB
+// Comment this in when you want to clear the DB, all of it
 // initializeDatabase();
