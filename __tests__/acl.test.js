@@ -1,21 +1,21 @@
 'use strict';
 
 const { server } = require('../src/server');
-const { db, users } = require('../src/models');
+const { db, userAuth } = require('../src/models');
 const supertest = require('supertest');
 const request = supertest(server);
 
-let testWriter;
+let testUser;
 let testAdmin;
 
 beforeAll(async () => {
   await db.sync();
-  testWriter = await users.create({
-    username: 'Writer',
+  testUser = await userAuth.create({
+    username: 'user',
     password: 'pass123',
-    role: 'writer',
+    role: 'user',
   });
-  testAdmin = await users.create({
+  testAdmin = await userAuth.create({
     username: 'Admin',
     password: 'pass123',
     role: 'admin',
@@ -27,8 +27,8 @@ afterAll(async () => {
 });
 
 describe('ACL Integration', () => {
-  it('does not allow a writer delete access', async () => {
-    let response = await request.get('/users').set('Authorization', `Bearer ${testWriter.token}`);
+  it('does not allow a user delete access', async () => {
+    let response = await request.get('/users').set('Authorization', `Bearer ${testUser.token}`);
     let error = JSON.parse(response.text);
 
     expect(response.status).toEqual(500);
@@ -40,7 +40,7 @@ describe('ACL Integration', () => {
     let result = JSON.parse(response.text);
 
     expect(response.status).toEqual(200);
-    expect(result).toEqual(['Writer', 'Admin']);
+    expect(result).toEqual(['user', 'admin']);
 
   });
 });

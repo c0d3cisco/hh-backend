@@ -1,82 +1,95 @@
 'use strict';
 
-const { server } = require('../src/server');
-const { db, users } = require('../src/models');
+const { app } = require('../src/server.js');
+const { db, users, checkin, userAuth } = require('../src/models');
 const supertest = require('supertest');
-const request = supertest(server);
+const request = supertest(app);
 
-let testAdmin;
+let testUser;
+let authToken;
 
 beforeAll(async () => {
-  await db.sync();
-  testAdmin = await users.create({
-    username: 'testyAdmin',
+  await db.sync({ force: true });
+
+  // Create a test user
+  testUser = await userAuth.create({
+    username: 'testAdmin',
     password: 'pass123',
     role: 'admin',
   });
+
+  // Login the test user and get the auth token
+  const loginResponse = await request.post('/api/signin').send({
+    username: 'testAdmin',
+    password: 'pass123',
+  });
+  authToken = loginResponse.body.token;
 });
 
 afterAll(async () => {
-  await db.drop();
+  await db.close();
 });
 
-/**  for Bearer Auth we must create the following headers, we'll do so in supertest with the .set() method
-* headers: {
-*  Authorization: Bearer <some-token>
-* }
-*/
-
-describe('v1 Routes', () => {
-  it('creates a record', async() => {
-    let response = await request.post('/api/v2/food').send({
-      name: 'tacos',
-      calories: 100,
-      type: 'protein',
-    }).set('Authorization', `Bearer ${testAdmin.token}`);
+describe('Routes', () => {
+  it('creates a check-in record', async () => {
+    const response = await request.post('/api/checkin').send({
+      userId: testUser.id,
+      timeIn: '2023-06-13T09:00:00Z',
+      timeOut: '2023-06-13T10:00:00Z',
+      moodIn: 2,
+      moodOut: 4,
+    }).set('Authorization', `Bearer ${authToken}`);
 
     expect(response.status).toEqual(201);
-    expect(response.body.name).toEqual('tacos');
-  });
-  it('cannot get all records with a bad token', async() => {
-    // notice the token plus some extra junk - should be seen as a bad token
-    let response = await request.get('/api/v2/food').set('Authorization', `Bearer ${testAdmin.token}.some.extra.junk`);
-    let error = JSON.parse(response.text);
-    
-    expect(response.status).toEqual(500);
-    expect(error.message).toEqual('Invalid Login');
+    expect(response.body.userId).toEqual(testUser.id);
   });
 
-  it('gets all records', async() => {
-    let response = await request.get('/api/v2/food').set('Authorization', `Bearer ${testAdmin.token}`);
+  it('cannot get all check-in records with a bad token', async () => {
+    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${authToken}.some.extra.junk`);
+    const error = response.body;
+
+    expect(response.status).toEqual(401);
+    expect(error.message).toEqual('Invalid token');
+  });
+
+  it('gets all check-in records', async () => {
+    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${authToken}`);
 
     expect(response.status).toEqual(200);
-    expect(response.body[0].name).toEqual('tacos');
+    expect(response.body.length).toBeGreaterThan(0);
   });
 
-  it('gets a single records', async() => {
-    let response = await request.get('/api/v2/food/1').set('Authorization', `Bearer ${testAdmin.token}`);
+  it('gets a single check-in record', async () => {
+    const allCheckins = await checkin.findAll();
+    const checkinId = allCheckins[0].id;
+
+    const response = await request.get(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${authToken}`);
 
     expect(response.status).toEqual(200);
-    expect(response.body.name).toEqual('tacos');
+    expect(response.body.id).toEqual(checkinId);
   });
 
-  it('updates a record', async() => {
-    let response = await request.put('/api/v2/food/1').send({
-      name: 'tacos',
-      calories: 1000,
-      type: 'protein',
-    }).set('Authorization', `Bearer ${testAdmin.token}`);
+  it('updates a check-in record', async () => {
+    const allCheckins = await checkin.findAll();
+    const checkinId = allCheckins[0].id;
+
+    const response = await request.put(`/api/checkin/${checkinId}`).send({
+      timeIn: '2023-06-13T09:00:00Z',
+      timeOut: '2023-06-13T11:00:00Z',
+    }).set('Authorization', `Bearer ${authToken}`);
 
     expect(response.status).toEqual(200);
-    expect(response.body.name).toEqual('tacos');
-    expect(response.body.calories).toEqual(1000);
+    expect(response.body.id).toEqual(checkinId);
+    expect(response.body.timeOut).toEqual('2023-06-13T11:00:00Z');
   });
 
-  it('deletes a record', async() => {
-    let response = await request.delete('/api/v2/food/1').set('Authorization', `Bearer ${testAdmin.token}`);
+  it('deletes a check-in record', async () => {
+    const allCheckins = await checkin.findAll();
+    const checkinId = allCheckins[0].id;
+
+    const response = await request.delete(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${authToken}`);
 
     expect(response.status).toEqual(200);
     expect(response.body).toEqual(1);
   });
-
-}); 
+});
