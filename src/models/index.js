@@ -14,10 +14,10 @@ const checkin = checkinModel(sequelize, DataTypes);
 const users = userModel(sequelize, DataTypes);
 const userAuth = userAuthModel(sequelize, DataTypes);
 
-userAuth.hasMany(checkin);
+userAuth.hasMany(checkin, { foreignKey: 'userId' });
 checkin.belongsTo(userAuth);
 
-userAuth.hasMany(users);
+userAuth.hasOne(users, { foreignKey: 'userId' });
 users.belongsTo(userAuth);
 
 module.exports = {

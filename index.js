@@ -22,3 +22,12 @@ async function initializeDatabase() {
 }
 // Comment this in when you want to clear the DB, all of it
 // initializeDatabase();
+
+// type 'clear all' into the terminal to clear the database
+process.stdin.on('data', data => {
+
+  if(data.toString().slice(0, -1) === 'clear all'){
+    console.log('clearing ALL table');
+    initializeDatabase();
+  }
+});
