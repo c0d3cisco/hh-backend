@@ -17,7 +17,7 @@ const userAuth = userAuthModel(sequelize, DataTypes);
 userAuth.hasMany(checkin);
 checkin.belongsTo(userAuth);
 
-userAuth.hasOne(users);
+userAuth.hasMany(users);
 users.belongsTo(userAuth);
 
 module.exports = {

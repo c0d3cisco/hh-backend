@@ -1,6 +1,7 @@
 'use strict';
 
-const { userData } = require('.');
+// TODO this might be userData
+const { users } = require('.');
 const encryptAndStoreUserData = require('./userData/encrypt');
 const decryptAndRetrieveUserData = require('./userData/decrypt');
 class DataCollection {
@@ -18,9 +19,13 @@ class DataCollection {
     }
   }
 
+  // TODO we aren't hittin here correctly
   create(record) {
+    console.log('This is the record', record);
+    console.log('Our model = userData',this.model === 'userData', 'This is our model', this.model, 'This is our userData', users);
+    console.log('This is our modelType',typeof this.model);
     // If the model is userData, encrypt and store the record in the database, else create the record
-    if (this.model === userData) {
+    if (this.model === users) {
       return encryptAndStoreUserData(record);
     } else {
       return this.model.create(record);
@@ -54,7 +59,7 @@ class DataCollection {
   }
   
   async retrieveDecryptedUserData() {
-    if (this.model === userData) {
+    if (this.model === users) {
       return decryptAndRetrieveUserData();
     }
     return null;
