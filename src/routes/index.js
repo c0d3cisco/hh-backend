@@ -52,6 +52,7 @@ async function handleGetOne(req, res, next) {
 async function handleCreate(req, res, next) {
   try {
     let obj = req.body;
+    // TODO not the same model, string vs obj
     let newRecord = await req.model.create(obj);
     res.status(201).json(newRecord);
   } catch(e){
