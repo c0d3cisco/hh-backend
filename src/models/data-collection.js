@@ -20,6 +20,8 @@ class DataCollection {
   }
 
   // TODO we aren't hittin here correctly
+  // TODO Work on getting encrpytion to work, currently not making it into the function
+  // Want to check if the model is  userData and then we would encrypt it.
   create(record) {
     console.log('This is the record', record);
     console.log('Our model = userData',this.model === 'userData', 'This is our model', this.model, 'This is our userData', users);
