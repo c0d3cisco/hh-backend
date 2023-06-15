@@ -1,5 +1,7 @@
 // Import the necessary libraries/modules
 const crypto = require('crypto');
+const { userData } = require('../../models/index.js');
+
 
 // Function to encrypt and store user data
 async function encryptAndStoreUserData(userData) {

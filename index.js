@@ -1,16 +1,16 @@
 'use strict';
 
+//Evnvironmental variables
 require('dotenv').config();
 const app = require('./src/server.js');
 const { db } = require('./src/models');
 const PORT = process.env.PORT || 3001;
 
-
 db.sync().then(() => {
   app.start(PORT || 3001);
 });
 
-// !Remove this before deploying
+// ! This function clears your local DB
 async function initializeDatabase() {
   try {
     // Synchronize the Regions model with the database table
@@ -20,10 +20,9 @@ async function initializeDatabase() {
     console.error('Error occurred while syncing all models.', error);
   }
 }
-// Comment this in when you want to clear the DB, all of it
-// initializeDatabase();
 
-// type 'clear all' into the terminal to clear the database
+//! type 'clear all' into the terminal to clear the database
+
 process.stdin.on('data', data => {
 
   if(data.toString().slice(0, -1) === 'clear all'){

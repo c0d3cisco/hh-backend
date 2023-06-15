@@ -27,6 +27,8 @@ The problem we’re solving is the need for a secure and efficient database appl
 
 ### Collaborators
 
+- Thanks to ChatGPT for assisting with some code corrections and testing features.
+- Thanks to the Helen House Project Team for giving us the opportunity to work on this incredible project.
 
 ### Setup
 
@@ -52,15 +54,48 @@ To use Postgres and SQLite databases with the application, please follow the ste
 
 #### Postgres & SQLite
 
-1. Create a new database for the project.
-2. Update the `.env` file with the Postgres connection details, including the host, port, database name, username, and password.
-3. Update the `.env` file with the SQLite database path.
+1. Create a new database for the project using `db:config` and then create a local database `db:create`
+3. Update the `.config` file so that it looks like this.
+   ``` json
+   "development": {
+    "username": "your-username",
+    "password": null,
+    "database": "helen_house_backend",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+   },
+   "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+   },
+   "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+   }
+   ```
+   
+4. Update the `.env` file with the SQLite database path so it follows this format
+   ```
+   PORT=3001
+   DATABASE_URL=postgres://localhost:5432/helen_house_backend
+   SECRET=secretPath
+   ```
+
+### Key Notes
+
+Type `clear all` into the terminal while running `nodemon` to clear your local database, this is useful if you need to start over or change a model locally.
 
 #### Tests
 
 To run tests, after running `npm i`, run the command `npm test`. The tests are implemented using Jest and Supertest. The test cases are located in the `tests` directory. The tests cover the API routes and ensure the proper functioning of the backend.
 
-### CRUD Routes
+### Routes
 
 The application provides the following CRUD routes for basic Create, Read, Read One, Update, and Delete operations:
 
@@ -69,6 +104,26 @@ The application provides the following CRUD routes for basic Create, Read, Read 
 - **Read One**: `GET /api/resource/:id` - Get a specific resource by ID.
 - **Update**: `PUT /api/resource/:id` - Update a specific resource by ID.
 - **Delete**: `DELETE /api/resource/:id` - Delete a specific resource by ID.
+
+Additional custom routes available in the application are:
+
+- **Get Users with UserData**: `GET /UserWithData` - Get all users with associated UserData.
+- **Get Users with CheckinData**: `GET /UserWithCheckin` - Get all users with associated CheckinData.
+- **Get User with CheckinData**: `GET /UserWithCheckin/:id` - Get a specific user with associated CheckinData by ID.
+- **Checkin Query**: `GET /checkinquery` - Perform a query on check-in data to find the total time all users spent during a single day or date range at Helen House. 
+  Be sure to add in a query parameter for:
+  - date_start YYYY-MM-DD
+  - and optional date_end YYYY-MM-DD
+- **Checkin Query by User**: `GET /checkinquery/:id` - Perform a query on check-in data to find the total time a specific user spent during a single day or date range at Helen House.
+ Be sure to add in a query parameter for:
+  - date_start YYYY-MM-DD
+  - and optional date_end YYYY-MM-DD
+- **Average Checkin Time**: `GET /checkinAverage` - Perform a query on check-in data to find the average time all users spent during a single day or date range at Helen House.
+  Be sure to add in a query parameter for:
+  - date_start YYYY-MM-DD
+  - and optional date_end YYYY-MM-DD
+
+Note: Replace `/api/resource` with the appropriate resource endpoint in your application.
 
 ### Testing and Program Flow
 
@@ -82,9 +137,10 @@ The application allows users to log in and post information to either the Checki
 
 #### Data Flow
 
-1. Users sign up and their username is stored in the UserData database table.
-2. Users log in and update the Checkin Database Table with their check-in information.
-3. Admins can log in and query the UserData and CheckinData tables to retrieve data based on their search criteria.
+1. Users sign up and their username is stored in the `users` table. 
+2. Users enter their personal information into the `userData` table 
+3. Users log in and update the Checkin Database Table with their check-in information.
+4. Admins can log in and query the user, userData and checkinData tables to retrieve data based on their search criteria.
 
 ### UML
 

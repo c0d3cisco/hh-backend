@@ -13,8 +13,6 @@ afterAll(async () => {
   await db.drop();
 });
 
-
-
 describe('Auth router', () => {
   let authToken;
 
@@ -24,8 +22,6 @@ describe('Auth router', () => {
       password: 'adminPass123',
       role: 'admin',
     });
-    
-    console.log('response for creating admin', response.body);
 
     expect(response.status).toEqual(201);
     expect(response.body.user.username).toEqual('AdminUser');
@@ -48,7 +44,8 @@ describe('Auth router', () => {
     const response = await request.post('/signin').auth('RegularUser', 'userPass123',
     );
 
-    // used for additional auth route test /secret 
+    // used for additional auth route test /secret
+
     authToken = response.body.user.token;
     expect(response.status).toEqual(200);
     expect(response.body.user.username).toEqual('RegularUser');
