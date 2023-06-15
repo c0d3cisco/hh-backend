@@ -17,10 +17,11 @@ beforeAll(async () => {
     password: 'pass123',
     role: 'admin',
   });
-  const loginResponse = await request.post('/signin').send({
-    username: 'testAdmin',
-    password: 'pass123',
-  });
+
+  // const loginResponse = await request.post('/signin').send({
+  //   username: 'testAdmin',
+  //   password: 'pass123',
+  // });
 
 });
 
@@ -40,6 +41,22 @@ afterAll(async () => {
 // });
 
 describe('Routes', () => {
+
+  test('proof of life', async () => {
+    const response = await request.get('/');
+    expect(response.status).toEqual(200);
+  });
+
+  test('404 on bad route', async () => {
+    const response = await request.get('/foo');
+    expect(response.status).toEqual(404);
+  });
+
+  test('404 on bad method', async () => {
+    const response = await request.post('/');
+    expect(response.status).toEqual(404);
+  });
+
   it('creates a check-in record', async () => {
     const response = await request.post('/api/checkin').send({
       userId: testAdmin.id,
@@ -62,7 +79,7 @@ describe('Routes', () => {
   });
 
   it('gets all check-in records', async () => {
-    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${testAdmin.token}`);
+    const response = await request.get('/api/checkin').set('Authorization', `Basic dGVzdEFkbWluOnBhc3MxMjM=`);
 
     expect(response.status).toEqual(200);
     expect(response.body.length).toBeGreaterThan(0);
@@ -72,7 +89,7 @@ describe('Routes', () => {
     const allCheckins = await checkin.findAll();
     const checkinId = allCheckins[0].id;
 
-    const response = await request.get(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${testAdmin.token}`);
+    const response = await request.get(`/api/checkin/${checkinId}`).set('Authorization', `Basic dGVzdEFkbWluOnBhc3MxMjM=`);
 
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(checkinId);
