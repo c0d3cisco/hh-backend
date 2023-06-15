@@ -6,6 +6,15 @@ beforeAll(async () => {
   await db.sync();
 });
 
+afterAll(async () => {
+  await db.drop();
+  await db.close();
+});
+
+// describe('Placeholder for tests', () => {
+//   it.todo('Add tests');
+// });
+
 describe('Comprehensive Server Test', () => {
   let token; // Store the bearer token for authenticated requests
 
@@ -53,8 +62,8 @@ describe('Comprehensive Server Test', () => {
   });
 
   // Clean up or reset data if necessary
-  afterAll(async () => {
-    await db.drop();
-    await db.close();
-  });
+  // afterAll(async () => {
+  //   await db.drop();
+  //   await db.close();
+  // });
 });
