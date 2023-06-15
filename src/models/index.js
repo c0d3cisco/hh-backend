@@ -26,6 +26,7 @@ userAuth.hasMany(checkin, { foreignKey: 'userId' });
 checkin.belongsTo(userAuth);
 
 userAuth.hasMany(users, { foreignKey: 'userId' });
+
 users.belongsTo(userAuth);
 
 // Export the Sequelize instance, models, and data collections

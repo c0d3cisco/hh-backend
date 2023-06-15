@@ -22,6 +22,7 @@ async function initializeDatabase() {
 }
 
 //! type 'clear all' into the terminal to clear the database
+
 process.stdin.on('data', data => {
 
   if(data.toString().slice(0, -1) === 'clear all'){

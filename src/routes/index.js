@@ -36,6 +36,7 @@ router.post('/:model', bearerAuth, acl('create'), handleCreate);
 router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
 
 // Handler for deleting an existing record
+
 router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
 
 // FOR TESTING WITHOUT AUTH

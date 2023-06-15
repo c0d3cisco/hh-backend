@@ -1,5 +1,11 @@
 'use strict';
 
+
+// // TODO this might be userData
+// const { users } = require('.');
+// const encryptAndStoreUserData = require('./userData/encrypt');
+// const decryptAndRetrieveUserData = require('./userData/decrypt');
+
 class DataCollection {
 
   constructor(model) {
@@ -22,6 +28,7 @@ class DataCollection {
   // Want to check if the model is userData and then we would encrypt it.
   create(record) {
     // Create a new record
+
     return this.model.create(record);
   }
 

@@ -1,9 +1,9 @@
 'use strict';
 
-const { server } = require('../src/server');
+const { app } = require('../src/server');
 const { db, userAuth } = require('../src/models');
 const supertest = require('supertest');
-const request = supertest(server);
+const request = supertest(app);
 
 let testUser;
 let testAdmin;
@@ -25,25 +25,29 @@ beforeAll(async () => {
 afterAll(async () => {
   await db.drop();
 });
-describe('Placeholder for tests', () => {
-  it.todo('Add tests');
-});
 
-// describe('ACL Integration', () => {
-//   it('does not allow a user delete access', async () => {
-//     let response = await request.get('/users').set('Authorization', `Bearer ${testUser.token}`);
-//     let error = JSON.parse(response.text);
-
-//     expect(response.status).toEqual(500);
-//     expect(error.message).toEqual('Access Denied');
-//   });
-//   it('does allow an admin delete access', async () => {
-//     let response = await request.get('/users').set('Authorization', `Bearer ${testAdmin.token}`);
-
-//     let result = JSON.parse(response.text);
-
-//     expect(response.status).toEqual(200);
-//     expect(result).toEqual(['user', 'admin']);
-
-//   });
+// describe('Placeholder for tests', () => {
+//   it.todo('Add tests');
 // });
+
+describe('ACL Integration', () => {
+
+  it('does not allow User role to access /users', async () => {
+    let response = await request.get('/users').set('Authorization', `Bearer ${testUser.token}`);
+    let error = JSON.parse(response.text);
+
+    expect(response.status).toEqual(500);
+    expect(error.message).toEqual('Access Denied');
+  });
+
+  it('does allow an admin /users access', async () => {
+    let response = await request.get('/users').set('Authorization', `Bearer ${testAdmin.token}`);
+
+    let result = JSON.parse(response.text);
+
+    expect(response.status).toEqual(200);
+    expect(result).toEqual(['user', 'Admin']);
+
+  });
+
+});

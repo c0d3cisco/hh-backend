@@ -2,6 +2,7 @@
 const crypto = require('crypto');
 const { userData } = require('../../models/index.js');
 
+
 // Function to encrypt and store user data
 async function encryptAndStoreUserData(userData) {
   console.log('We are inside encryption with userdata', userData);
