@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET || 'secretstring';
 
 const userModel = (sequelize, DataTypes) => {
-  const model = sequelize.define('Users', {
-    username: { type: DataTypes.STRING, required: true, unique: true },
-    password: { type: DataTypes.STRING, required: true },
-    role: { type: DataTypes.ENUM('user', 'admin'), required: true, defaultValue: 'user'},
+  const model = sequelize.define('users', {
+    username: { type: DataTypes.STRING, allowNull: false, unique: true },
+    password: { type: DataTypes.STRING, allowNull: false },
+    role: { type: DataTypes.ENUM('user', 'staff', 'admin'), allowNull: false, defaultValue: 'user'},
     token: {
       type: DataTypes.VIRTUAL,
       get() {
@@ -25,6 +25,7 @@ const userModel = (sequelize, DataTypes) => {
       get() {
         const acl = {
           user: ['create', 'update'],
+          staff: ['read', 'create', 'update'],
           admin: ['read', 'create', 'update', 'delete'],
         };
         return acl[this.role];
@@ -59,3 +60,4 @@ const userModel = (sequelize, DataTypes) => {
 };
 
 module.exports = userModel;
+

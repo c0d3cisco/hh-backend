@@ -1,9 +1,9 @@
 'use strict';
 
-// TODO this might be userData
-const { users } = require('.');
-const encryptAndStoreUserData = require('./userData/encrypt');
-const decryptAndRetrieveUserData = require('./userData/decrypt');
+// // TODO this might be userData
+// const { users } = require('.');
+// const encryptAndStoreUserData = require('./userData/encrypt');
+// const decryptAndRetrieveUserData = require('./userData/decrypt');
 class DataCollection {
 
   constructor(model) {
@@ -23,15 +23,8 @@ class DataCollection {
   // TODO Work on getting encrpytion to work, currently not making it into the function
   // Want to check if the model is  userData and then we would encrypt it.
   create(record) {
-    console.log('This is the record', record);
-    console.log('Our model = userData',this.model === 'userData', 'This is our model', this.model, 'This is our userData', users);
-    console.log('This is our modelType',typeof this.model);
-    // If the model is userData, encrypt and store the record in the database, else create the record
-    if (this.model === users) {
-      return encryptAndStoreUserData(record);
-    } else {
-      return this.model.create(record);
-    }
+
+    return this.model.create(record);
   }
 
   async update(id, data) {
@@ -59,13 +52,7 @@ class DataCollection {
       return error;
     }
   }
-  
-  async retrieveDecryptedUserData() {
-    if (this.model === users) {
-      return decryptAndRetrieveUserData();
-    }
-    return null;
-  }
+
 }
 
 module.exports = DataCollection;

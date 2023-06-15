@@ -20,18 +20,18 @@ router.param('model', (req, res, next) => {
   }
 });
 
-// router.get('/:model', basicAuth, handleGetAll);
-// router.get('/:model/:id', basicAuth, handleGetOne);
-// router.post('/:model', bearerAuth, acl('create'), handleCreate);
-// router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
-// router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
+router.get('/:model', basicAuth, handleGetAll);
+router.get('/:model/:id', basicAuth, handleGetOne);
+router.post('/:model', bearerAuth, acl('create'), handleCreate);
+router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
+router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
 
 // FOR TESTING WITHOUT AUTH
-router.get('/:model', handleGetAll);
-router.get('/:model/:id', handleGetOne);
-router.post('/:model', handleCreate);
-router.put('/:model/:id', handleUpdate);
-router.delete('/:model/:id', handleDelete);
+// router.get('/:model', handleGetAll);
+// router.get('/:model/:id', handleGetOne);
+// router.post('/:model', handleCreate);
+// router.put('/:model/:id', handleUpdate);
+// router.delete('/:model/:id', handleDelete);
 
 async function handleGetAll(req, res) {
   let allRecords = await req.model.get();
@@ -52,6 +52,7 @@ async function handleGetOne(req, res, next) {
 async function handleCreate(req, res, next) {
   try {
     let obj = req.body;
+    // TODO not the same model, string vs obj
     let newRecord = await req.model.create(obj);
     res.status(201).json(newRecord);
   } catch(e){
@@ -64,6 +65,7 @@ async function handleUpdate(req, res, next) {
   try {
     const id = req.params.id;
     const obj = req.body;
+    console.log('********', id, obj);
     let updatedRecord = await req.model.update(id, obj);
     res.status(200).json(updatedRecord);
   } catch(e){

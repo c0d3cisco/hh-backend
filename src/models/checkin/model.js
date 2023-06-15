@@ -1,11 +1,13 @@
 'use strict';
 
 const checkinModel = (sequelize, DataTypes) => sequelize.define('checkin', {
-  username: { type: DataTypes.STRING, required: true },
-  timeIn: { type: DataTypes.DATE, required: true },
-  timeOut: { type: DataTypes.DATE, required: false },
-  moodIn: { type: DataTypes.ENUM(['1 - Terrible', '2', '3', '4', '5 - Excellent']), required: true},
-  moodOut: { type: DataTypes.ENUM(['1 - Terrible', '2', '3', '4', '5 - Excellent']), required: false},
+  userId: {type: DataTypes.INTEGER, allowNull: false},
+  // username: { type: DataTypes.STRING, allowNull: false },
+  timeIn: { type: DataTypes.DATE, allowNull: false },
+  timeOut: { type: DataTypes.DATE, allowNull: true },
+  moodIn: { type: DataTypes.ENUM(['1 - Terrible', '2', '3', '4', '5 - Excellent']), allowNull: false},
+  moodOut: { type: DataTypes.ENUM(['1 - Terrible', '2', '3', '4', '5 - Excellent']), allowNull: true},
+
 });
 
 module.exports = checkinModel;
