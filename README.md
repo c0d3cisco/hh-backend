@@ -56,6 +56,10 @@ To use Postgres and SQLite databases with the application, please follow the ste
 2. Update the `.env` file with the Postgres connection details, including the host, port, database name, username, and password.
 3. Update the `.env` file with the SQLite database path.
 
+### Key Notes
+
+Type `clear all` into the terminal to clear your local database, this is useful if you need to start over or change a model locally.
+
 #### Tests
 
 To run tests, after running `npm i`, run the command `npm test`. The tests are implemented using Jest and Supertest. The test cases are located in the `tests` directory. The tests cover the API routes and ensure the proper functioning of the backend.

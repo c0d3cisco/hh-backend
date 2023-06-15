@@ -13,8 +13,6 @@ afterAll(async () => {
   await db.drop();
 });
 
-
-
 describe('Auth router', () => {
   let authToken;
 

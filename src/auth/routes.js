@@ -6,10 +6,12 @@ const authRouter = express.Router();
 const { userAuth } = require('../models');
 const basicAuth = require('./middleware/basic.js');
 const bearerAuth = require('./middleware/bearer.js');
-const permissions = require('./middleware/acl.js');
+// const permissions = require('./middleware/acl.js');
 
+// Sign up route
 authRouter.post('/signup', async (req, res, next) => {
   try {
+    // Create a new user record
     let userRecord = await userAuth.create(req.body);
     const output = {
       user: userRecord,
@@ -21,6 +23,7 @@ authRouter.post('/signup', async (req, res, next) => {
   }
 });
 
+// Sign in route
 authRouter.post('/signin', basicAuth, (req, res, next) => {
   const user = {
     user: req.user,
@@ -29,12 +32,16 @@ authRouter.post('/signin', basicAuth, (req, res, next) => {
   res.status(200).json(user);
 });
 
+// Get all users route
 authRouter.get('/users', async (req, res, next) => {
+  // Find all user records
   const userRecords = await userAuth.findAll({});
+  // Extract usernames from user records
   const list = userRecords.map(user => user.username);
   res.status(200).json(list);
 });
 
+// Secret route (requires bearer authentication)
 authRouter.get('/secret', bearerAuth, async (req, res, next) => {
   res.status(200).send('Welcome to the secret area');
 });
