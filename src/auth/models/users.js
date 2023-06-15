@@ -73,3 +73,4 @@ const userModel = (sequelize, DataTypes) => {
 };
 
 module.exports = userModel;
+
