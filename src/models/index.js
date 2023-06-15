@@ -1,5 +1,6 @@
 'use strict';
 
+//Imports 
 const { Sequelize, DataTypes } = require('sequelize');
 const userModel = require('./userData/model.js');
 const checkinModel = require('./checkin/model.js');
