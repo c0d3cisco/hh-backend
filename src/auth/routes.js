@@ -1,11 +1,14 @@
 'use strict';
 
+// 3rd party resources
 const express = require('express');
 const authRouter = express.Router();
 
+// Authentication
 const { userAuth } = require('../models');
 const basicAuth = require('./middleware/basic.js');
 const bearerAuth = require('./middleware/bearer.js');
+
 const permissions = require('./middleware/acl.js');
 
 // Sign up route

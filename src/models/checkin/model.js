@@ -5,8 +5,8 @@ const checkinModel = (sequelize, DataTypes) => sequelize.define('checkin', {
   // username: { type: DataTypes.STRING, allowNull: false },
   timeIn: { type: DataTypes.DATE, allowNull: false },
   timeOut: { type: DataTypes.DATE, allowNull: true },
-  moodIn: { type: DataTypes.ENUM(['1 - Terrible', '2', '3', '4', '5 - Excellent']), allowNull: false},
-  moodOut: { type: DataTypes.ENUM(['1 - Terrible', '2', '3', '4', '5 - Excellent']), allowNull: true},
+  moodIn: { type: DataTypes.ENUM(['1', '2', '3', '4', '5']), allowNull: false},
+  moodOut: { type: DataTypes.ENUM(['1', '2', '3', '4', '5']), allowNull: true},
 
 });
 
