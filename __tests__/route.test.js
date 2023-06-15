@@ -5,47 +5,52 @@ const { db, users, checkin, userAuth } = require('../src/models');
 const supertest = require('supertest');
 const request = supertest(app);
 
-let testUser;
-let authToken;
+let testAdmin;
+
 
 beforeAll(async () => {
-  await db.sync({ force: true });
+  await db.sync();
 
   // Create a test user
-  testUser = await userAuth.create({
+  testAdmin = await userAuth.create({
     username: 'testAdmin',
     password: 'pass123',
     role: 'admin',
   });
 
-  // Login the test user and get the auth token
-  const loginResponse = await request.post('/api/signin').send({
+  const loginResponse = await request.post('/signin').send({
     username: 'testAdmin',
     password: 'pass123',
   });
-  authToken = loginResponse.body.token;
+
 });
 
+// Login the test user and get the auth token
+//   console.log('loginResponse', loginResponse);
+//   authToken = loginResponse.body.token;
+//   console.log('---------------AuthToken-------------------', authToken);
+// });
+
 afterAll(async () => {
-  await db.close();
+  await db.drop();
 });
 
 describe('Routes', () => {
   it('creates a check-in record', async () => {
     const response = await request.post('/api/checkin').send({
-      userId: testUser.id,
+      userId: testAdmin.id,
       timeIn: '2023-06-13T09:00:00Z',
       timeOut: '2023-06-13T10:00:00Z',
       moodIn: 2,
       moodOut: 4,
-    }).set('Authorization', `Bearer ${authToken}`);
+    }).set('Authorization', `Bearer ${testAdmin.token}`);
 
     expect(response.status).toEqual(201);
-    expect(response.body.userId).toEqual(testUser.id);
+    expect(response.body.userId).toEqual(testAdmin.id);
   });
 
   it('cannot get all check-in records with a bad token', async () => {
-    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${authToken}.some.extra.junk`);
+    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${testAdmin.token}.some.extra.junk`);
     const error = response.body;
 
     expect(response.status).toEqual(401);
@@ -53,7 +58,7 @@ describe('Routes', () => {
   });
 
   it('gets all check-in records', async () => {
-    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${authToken}`);
+    const response = await request.get('/api/checkin').set('Authorization', `Bearer ${testAdmin.token}`);
 
     expect(response.status).toEqual(200);
     expect(response.body.length).toBeGreaterThan(0);
@@ -63,7 +68,7 @@ describe('Routes', () => {
     const allCheckins = await checkin.findAll();
     const checkinId = allCheckins[0].id;
 
-    const response = await request.get(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${authToken}`);
+    const response = await request.get(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${testAdmin.token}`);
 
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(checkinId);
@@ -76,7 +81,7 @@ describe('Routes', () => {
     const response = await request.put(`/api/checkin/${checkinId}`).send({
       timeIn: '2023-06-13T09:00:00Z',
       timeOut: '2023-06-13T11:00:00Z',
-    }).set('Authorization', `Bearer ${authToken}`);
+    }).set('Authorization', `Bearer ${testAdmin.token}`);
 
     expect(response.status).toEqual(200);
     expect(response.body.id).toEqual(checkinId);
@@ -87,7 +92,7 @@ describe('Routes', () => {
     const allCheckins = await checkin.findAll();
     const checkinId = allCheckins[0].id;
 
-    const response = await request.delete(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${authToken}`);
+    const response = await request.delete(`/api/checkin/${checkinId}`).set('Authorization', `Bearer ${testAdmin.token}`);
 
     expect(response.status).toEqual(200);
     expect(response.body).toEqual(1);
