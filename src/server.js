@@ -18,8 +18,6 @@ const { userAuthModel } = require('./models/index.js');
 const { checkin, users } = require('./models/index.js');
 const { Op } = require('sequelize');
 
-
-
 // Prepare the express app
 const app = express();
 
