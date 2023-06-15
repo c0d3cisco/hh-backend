@@ -2,6 +2,8 @@ const supertest = require('supertest');
 const { app } = require('../src/server.js');
 const { db } = require('../src/models/index');
 
+let token;
+
 beforeAll(async () => {
   await db.sync();
 });
@@ -12,14 +14,10 @@ afterAll(async () => {
   await db.close();
 });
 
-// describe('Placeholder for tests', () => {
-//   it.todo('Add tests');
-// });
+
 
 describe('Comprehensive Server Test', () => {
-  let token; // Store the bearer token for authenticated requests
 
-  // Test signup and get the bearer token
   it('should signup a new user and return a bearer token', async () => {
     const response = await supertest(app)
       .post('/signup')
@@ -30,7 +28,6 @@ describe('Comprehensive Server Test', () => {
     token = response.body.token;
   });
 
-  // Test signin and get a new bearer token
   it('should signin an existing user and return a new bearer token', async () => {
     const response = await supertest(app)
       .post('/signin')
@@ -41,31 +38,65 @@ describe('Comprehensive Server Test', () => {
     token = response.body.token;
   });
 
-  // Test the protected route with bearer token authentication
   it('should access the protected route with a valid bearer token', async () => {
     const response = await supertest(app)
       .get('/secret')
       .set('Authorization', `Bearer ${token}`);
-    console.log('This is the token for this test: ', token);
 
     expect(response.status).toBe(200);
     expect(response.text).toBe('Welcome to the secret area');
   });
 
-  // Test the route for getting all users with bearer token authentication and delete permission
   it('should get all users with bearer token authentication and delete permission', async () => {
     const response = await supertest(app)
       .get('/users')
       .set('Authorization', `Bearer ${token}`);
-    console.log('This is the token for this test: ', token);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(expect.any(Array));
   });
 
-  // Clean up or reset data if necessary
+  it('testing checkinquery route', async () => {
+    const response = await supertest(app)
+      .get('/checkinquery')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
 
-  // afterAll(async () => {
-  //   await db.drop();
-  //   await db.close();
-  // });
+  it('testing UserWithCheckin route', async () => {
+    const response = await supertest(app)
+      .get('/UserWithCheckin')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+
+  it('testing UserWithCheckin route with ID', async () => {
+    const response = await supertest(app)
+      .get('/UserWithCheckin/1')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+
+  it('testing UserWithData route', async () => {
+    const response = await supertest(app)
+      .get('/UserWithData')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+
+  it('testing checkinAverage route', async () => {
+    const response = await supertest(app)
+      .get('/checkinAverage')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+
+  it('testing getAgeQuery route', async () => {
+    const response = await supertest(app)
+      .get('/getAgeQuery')
+      .set('Authorization', `Bearer ${token}`);
+    expect(response.status).toBe(200);
+  });
+
+  
+
 });
