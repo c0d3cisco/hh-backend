@@ -6,6 +6,7 @@ beforeAll(async () => {
   await db.sync();
 });
 
+
 afterAll(async () => {
   await db.drop();
   await db.close();
@@ -62,6 +63,7 @@ describe('Comprehensive Server Test', () => {
   });
 
   // Clean up or reset data if necessary
+
   // afterAll(async () => {
   //   await db.drop();
   //   await db.close();

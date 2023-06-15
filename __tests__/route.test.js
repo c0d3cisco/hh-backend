@@ -17,14 +17,12 @@ beforeAll(async () => {
     password: 'pass123',
     role: 'admin',
   });
-
   const loginResponse = await request.post('/signin').send({
     username: 'testAdmin',
     password: 'pass123',
   });
 
 });
-
 
 // Login the test user and get the auth token
 //   console.log('loginResponse', loginResponse);
@@ -35,6 +33,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await db.drop();
 });
+
 
 // describe('Placeholder for tests', () => {
 //   it.todo('Add tests');
