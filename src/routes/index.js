@@ -65,6 +65,7 @@ async function handleUpdate(req, res, next) {
   try {
     const id = req.params.id;
     const obj = req.body;
+    console.log('********', id, obj);
     let updatedRecord = await req.model.update(id, obj);
     res.status(200).json(updatedRecord);
   } catch(e){
