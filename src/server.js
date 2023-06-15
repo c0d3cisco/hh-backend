@@ -182,6 +182,41 @@ app.get('/checkinAverage', bearerAuth, acl('delete'), async (req, res, next) => 
   }
 });
 
+app.get('/getAgeQuery', async (req, res, next)=> {
+  const users13Under = await users.count({
+    where:{
+      date_of_birth: {
+        [Op.gt]: new Date() - 410248800000,
+      },
+    },
+  });
+  const users13to18 = await users.count({
+    where:{
+      date_of_birth: {
+        [Op.lt]: new Date() - 410248800000,
+        [Op.gt]: new Date() - 568036800000,
+      },
+    },
+  });
+
+  const users18over = await users.count({
+    where:{
+      date_of_birth: {
+        [Op.lt]: new Date() - 568036800000,
+      },
+    },
+  });
+
+  let allUsers = {
+    users13Under,
+    users13to18,
+    users18over,
+  };
+
+  res.status(200).json(allUsers);
+});
+
+
 // proof of life
 app.get('/', (req, res, next) => {
   res.status(200).send('Server is alive!!!');
