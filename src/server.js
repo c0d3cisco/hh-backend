@@ -34,7 +34,6 @@ app.use('/api', Routes);
 // TODO Query Routes to be moved to the queries.js inside Route
 // This gets all users that have userData inside the UserData Table
 app.get('/UserWithData', bearerAuth, acl('delete'), async (req, res, next) => {
-  // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(users);
     res.status(200).send(user);
@@ -45,7 +44,6 @@ app.get('/UserWithData', bearerAuth, acl('delete'), async (req, res, next) => {
 
 // This gets all users that have checkIn data inside the CheckinData Table
 app.get('/UserWithCheckin', bearerAuth, acl('delete'), async (req, res, next) => {
-  // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(checkin);
     res.status(200).send(user);
@@ -56,7 +54,6 @@ app.get('/UserWithCheckin', bearerAuth, acl('delete'), async (req, res, next) =>
 
 // This gets a single user that has checkIn data inside the CheckinData Table, by ID
 app.get('/UserWithCheckin/:id', bearerAuth, acl('delete'), async (req, res, next) => {
-  // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(checkin, req.params.id);
     res.status(200).send(user);
