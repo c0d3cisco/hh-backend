@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "nmullaney",
+    "username": "your-username",
     "password": null,
     "database": "helen_house_backend",
     "host": "127.0.0.1",

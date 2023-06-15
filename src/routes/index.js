@@ -24,10 +24,10 @@ router.param('model', (req, res, next) => {
 });
 
 // Handler for GET all records
-router.get('/:model', basicAuth, handleGetAll);
+router.get('/:model', bearerAuth, handleGetAll);
 
 // Handler for GET a single record by ID
-router.get('/:model/:id', basicAuth, handleGetOne);
+router.get('/:model/:id', bearerAuth, handleGetOne);
 
 // Handler for creating a new record
 router.post('/:model', bearerAuth, acl('create'), handleCreate);

@@ -4,6 +4,9 @@
 const express = require('express');
 const cors = require('cors');
 
+const bearerAuth = require('./auth/middleware/bearer');
+const acl = require('./auth/middleware/acl');
+
 // Esoteric Resources
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
@@ -14,8 +17,6 @@ const Routes = require('./routes/index.js');
 const { userAuthModel } = require('./models/index.js');
 const { checkin, users } = require('./models/index.js');
 const { Op } = require('sequelize');
-
-
 
 // Prepare the express app
 const app = express();
@@ -32,24 +33,37 @@ app.use('/api', Routes);
 
 // TODO Query Routes to be moved to the queries.js inside Route
 // This gets all users that have userData inside the UserData Table
-app.get('/UserWithData', async (req, res, next) => {
+app.get('/UserWithData', bearerAuth, acl('delete'), async (req, res, next) => {
   // const user = await userAuth.findAll({include: {model: userData}});
-  const user = await userAuthModel.readWithAssociations(users);
-  res.status(200).send(user);
+  try {
+    const user = await userAuthModel.readWithAssociations(users);
+    res.status(200).send(user);
+  } catch (error) {
+    console.error(error.message || error);
+  }
 });
 
 // This gets all users that have checkIn data inside the CheckinData Table
-app.get('/UserWithCheckin', async (req, res, next) => {
+app.get('/UserWithCheckin', bearerAuth, acl('delete'), async (req, res, next) => {
   // const user = await userAuth.findAll({include: {model: userData}});
-  const user = await userAuthModel.readWithAssociations(checkin);
-  res.status(200).send(user);
+  try {
+    const user = await userAuthModel.readWithAssociations(checkin);
+    res.status(200).send(user);
+  } catch (error) {
+    console.log(error.message || error);
+  }
 });
 
 // This gets a single user that has checkIn data inside the CheckinData Table, by ID
-app.get('/UserWithCheckin/:id', async (req, res, next) => {
+app.get('/UserWithCheckin/:id', bearerAuth, acl('delete'), async (req, res, next) => {
   // const user = await userAuth.findAll({include: {model: userData}});
-  const user = await userAuthModel.readWithAssociations(checkin, req.params.id);
-  res.status(200).send(user);
+  try {
+    const user = await userAuthModel.readWithAssociations(checkin, req.params.id);
+    res.status(200).send(user);
+  } catch (error) {
+    console.log(error.message || error);
+
+  }
 });
 
 // This is our first checkin Query to find the total time all users spent during a single day at Helen House. You can also send a 2nd date to see the the range between the two dates Broken out by user
@@ -57,37 +71,41 @@ app.get('/UserWithCheckin/:id', async (req, res, next) => {
 // Be sure to add in a query parameter for
 // date_start YYYY-MM-DD
 // and optional date_end YYYY-MM-DD
-app.get('/checkinquery', async (req, res, next) => {
-  let date_start = req.query.date_start;
-  let date_end = req.query.date_end;
-  const checkins = await checkin.findAll({
-    where: {
-      timeIn: {
-        [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
-        [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+app.get('/checkinquery', bearerAuth, acl('delete'), async (req, res, next) => {
+  try {
+    let date_start = req.query.date_start;
+    let date_end = req.query.date_end;
+    const checkins = await checkin.findAll({
+      where: {
+        timeIn: {
+          [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
+          [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+        },
       },
-    },
-  });
+    });
 
-  const userTimeDifference = {};
-  checkins.forEach((checkin) => {
-    const { userId, timeIn, timeOut } = checkin;
-    if (!userTimeDifference[userId]) {
-      userTimeDifference[userId] = 0;
+    const userTimeDifference = {};
+    checkins.forEach((checkin) => {
+      const { userId, timeIn, timeOut } = checkin;
+      if (!userTimeDifference[userId]) {
+        userTimeDifference[userId] = 0;
+      }
+      console.log(userId);
+      console.log(userTimeDifference);
+      const differenceInMs = new Date(timeOut) - new Date(timeIn);
+      userTimeDifference[userId] += differenceInMs;
+    });
+    const formattedTimeDifference = {};
+    for (const userId in userTimeDifference) {
+      const differenceInMs = userTimeDifference[userId];
+      const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
+      const minutes = Math.floor((differenceInMs / (1000 * 60)) % 60);
+      formattedTimeDifference[userId] = { hours, minutes };
     }
-    console.log(userId);
-    console.log(userTimeDifference);
-    const differenceInMs = new Date(timeOut) - new Date(timeIn);
-    userTimeDifference[userId] += differenceInMs;
-  });
-  const formattedTimeDifference = {};
-  for (const userId in userTimeDifference) {
-    const differenceInMs = userTimeDifference[userId];
-    const hours = Math.floor(differenceInMs / (1000 * 60 * 60));
-    const minutes = Math.floor((differenceInMs / (1000 * 60)) % 60);
-    formattedTimeDifference[userId] = { hours, minutes };
+    res.status(200).send(formattedTimeDifference);
+  } catch (error) {
+    console.log(error.message || error);
   }
-  res.status(200).send(formattedTimeDifference);
 });
 
 // This is our second checkin Query to find the total time a single user during a single day at Helen House. You can also send a 2nd date to see the the range between the two dates
@@ -96,65 +114,72 @@ app.get('/checkinquery', async (req, res, next) => {
 // Be sure to add in a query parameter for
 // date_start YYYY-MM-DD
 // and optional date_end YYYY-MM-DD
-app.get('/checkinquery/:id', async (req, res, next) => {
-  let date_start = req.query.date_start;
-  let date_end = req.query.date_end;
-  const checkins = await checkin.findAll({
-    where: {
-      userId: req.params.id,
-      timeIn: {
-        [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
-        [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+app.get('/checkinquery/:id', bearerAuth, acl('delete'), async (req, res, next) => {
+  try {
+    let date_start = req.query.date_start;
+    let date_end = req.query.date_end;
+    const checkins = await checkin.findAll({
+      where: {
+        userId: req.params.id,
+        timeIn: {
+          [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
+          [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.log(error.message || error);
+  }
 });
 
 // This is our third checkin Query to find the average time all users spent during a single day at Helen House. Broken out by user
 
 // Be sure to add in a query parameter for
 // date YYYY-MM-DD
-app.get('/checkinAverage', async (req, res, next) => {
-  console.log('Hello');
-  let date_start = req.query.date_start;
-  let date_end = req.query.date_end;
-  const checkins = await checkin.findAll({
-    where: {
-      timeIn: {
-        [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
-        [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+app.get('/checkinAverage', bearerAuth, acl('delete'), async (req, res, next) => {
+  try {
+    let date_start = req.query.date_start;
+    let date_end = req.query.date_end;
+    const checkins = await checkin.findAll({
+      where: {
+        timeIn: {
+          [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
+          [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+        },
       },
-    },
-  });
+    });
 
-  const userTimeDifference = {};
-  
-  checkins.forEach((checkin) => {
-    const { userId, timeIn, timeOut } = checkin;
+    const userTimeDifference = {};
 
-    if (!userTimeDifference[userId]) {
-      userTimeDifference[userId] = 0;
+    checkins.forEach((checkin) => {
+      const { userId, timeIn, timeOut } = checkin;
+
+      if (!userTimeDifference[userId]) {
+        userTimeDifference[userId] = 0;
+      }
+
+      const differenceInMs = new Date(timeOut) - new Date(timeIn);
+      userTimeDifference[userId] += differenceInMs;
+    });
+
+    let totalDifferenceInMs = 0;
+    let numberOfUsers = 0;
+
+    for (const userId in userTimeDifference) {
+      const differenceInMs = userTimeDifference[userId];
+      totalDifferenceInMs += differenceInMs;
+      numberOfUsers++;
     }
 
-    const differenceInMs = new Date(timeOut) - new Date(timeIn);
-    userTimeDifference[userId] += differenceInMs;
-  });
+    const averageTimePerUserInMs = totalDifferenceInMs / numberOfUsers;
+    const averageTimePerUserInMinutes = averageTimePerUserInMs / (1000 * 60);
+    const averageTimePerUserInHours = Math.floor(averageTimePerUserInMinutes / 60);
+    const remainingMinutes = Math.floor(averageTimePerUserInMinutes % 60);
 
-  let totalDifferenceInMs = 0;
-  let numberOfUsers = 0;
-
-  for (const userId in userTimeDifference) {
-    const differenceInMs = userTimeDifference[userId];
-    totalDifferenceInMs += differenceInMs;
-    numberOfUsers++;
+    res.status(200).json({ hours: averageTimePerUserInHours, minutes: remainingMinutes });
+  } catch (error) {
+    console.log(error.message || error);
   }
-
-  const averageTimePerUserInMs = totalDifferenceInMs / numberOfUsers;
-  const averageTimePerUserInMinutes = averageTimePerUserInMs / (1000 * 60);
-  const averageTimePerUserInHours = Math.floor(averageTimePerUserInMinutes / 60);
-  const remainingMinutes = Math.floor(averageTimePerUserInMinutes % 60);
-
-  res.status(200).json({ hours: averageTimePerUserInHours, minutes: remainingMinutes });
 });
 
 // proof of life
