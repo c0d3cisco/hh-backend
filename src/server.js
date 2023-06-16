@@ -34,32 +34,37 @@ app.use('/api', Routes);
 // TODO Query Routes to be moved to the queries.js inside Route
 // This gets all users that have userData inside the UserData Table
 app.get('/UserWithData', bearerAuth, acl('delete'), async (req, res, next) => {
+  // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(users);
     res.status(200).send(user);
   } catch (error) {
     console.error(error.message || error);
+    res.status(500).send('error getting UserWithData');
   }
 });
 
 // This gets all users that have checkIn data inside the CheckinData Table
 app.get('/UserWithCheckin', bearerAuth, acl('delete'), async (req, res, next) => {
+  // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(checkin);
     res.status(200).send(user);
   } catch (error) {
     console.log(error.message || error);
+    res.status(500).send('error getting UserWithCheckin');
   }
 });
 
 // This gets a single user that has checkIn data inside the CheckinData Table, by ID
 app.get('/UserWithCheckin/:id', bearerAuth, acl('delete'), async (req, res, next) => {
+  // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(checkin, req.params.id);
     res.status(200).send(user);
   } catch (error) {
     console.log(error.message || error);
-
+    res.status(500).send('error getting UserWithCheckin with ID');
   }
 });
 
@@ -102,6 +107,7 @@ app.get('/checkinquery', bearerAuth, acl('delete'), async (req, res, next) => {
     res.status(200).send(formattedTimeDifference);
   } catch (error) {
     console.log(error.message || error);
+    res.status(500).send('error getting checkinquery');
   }
 });
 
@@ -126,13 +132,15 @@ app.get('/checkinquery/:id', bearerAuth, acl('delete'), async (req, res, next) =
     });
   } catch (error) {
     console.log(error.message || error);
+    res.status(500).send('error getting checkinquery with ID');
   }
 });
 
 // This is our third checkin Query to find the average time all users spent during a single day at Helen House. Broken out by user
 
 // Be sure to add in a query parameter for
-// date YYYY-MM-DD
+// date_start YYYY-MM-DD
+// and optional date_end YYYY-MM-DD
 app.get('/checkinAverage', bearerAuth, acl('delete'), async (req, res, next) => {
   try {
     let date_start = req.query.date_start;
@@ -176,41 +184,49 @@ app.get('/checkinAverage', bearerAuth, acl('delete'), async (req, res, next) => 
     res.status(200).json({ hours: averageTimePerUserInHours, minutes: remainingMinutes });
   } catch (error) {
     console.log(error.message || error);
+    res.status(500).send('error getting checkinAverage');
   }
 });
 
-app.get('/getAgeQuery', async (req, res, next)=> {
-  const users13Under = await users.count({
-    where:{
-      date_of_birth: {
-        [Op.gt]: new Date() - 410248800000,
-      },
-    },
-  });
-  const users13to18 = await users.count({
-    where:{
-      date_of_birth: {
-        [Op.lt]: new Date() - 410248800000,
-        [Op.gt]: new Date() - 568036800000,
-      },
-    },
-  });
+// This is our fourth checkin Query to number of members below 13, between 13 and 18. over 18
 
-  const users18over = await users.count({
-    where:{
-      date_of_birth: {
-        [Op.lt]: new Date() - 568036800000,
+app.get('/getAgeQuery', bearerAuth, acl('delete'), async (req, res, next)=> {
+  try{
+    const users13Under = await users.count({
+      where:{
+        date_of_birth: {
+          [Op.gt]: new Date() - 410248800000,
+        },
       },
-    },
-  });
+    });
+    const users13to18 = await users.count({
+      where:{
+        date_of_birth: {
+          [Op.lt]: new Date() - 410248800000,
+          [Op.gt]: new Date() - 568036800000,
+        },
+      },
+    });
 
-  let allUsers = {
-    users13Under,
-    users13to18,
-    users18over,
-  };
+    const users18over = await users.count({
+      where:{
+        date_of_birth: {
+          [Op.lt]: new Date() - 568036800000,
+        },
+      },
+    });
 
-  res.status(200).json(allUsers);
+    let allUsers = {
+      users13Under,
+      users13to18,
+      users18over,
+    };
+
+    res.status(200).json(allUsers);
+  } catch (error) {
+    console.log(error.message || error);
+    res.status(500).send('error getting getAgeQuery');
+  }
 });
 
 
