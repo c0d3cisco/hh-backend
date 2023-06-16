@@ -12,10 +12,10 @@ class DataCollection {
     this.model = model;
   }
 
-  get(id) {
-    if (id) {
+  get(userId) {
+    if (userId) {
       // Find a single record by ID
-      return this.model.findOne({ where: { id } });
+      return this.model.findAll({ where: { userId } });
     }
     else {
       // Find all records
@@ -32,17 +32,17 @@ class DataCollection {
     return this.model.create(record);
   }
 
-  async update(id, data) {
+  async update(userId, data) {
     // Find a record by ID
-    let result = await this.model.findOne({ where: { id } });
+    let result = await this.model.findOne({ where: { userId } });
     // Update the record with new data
     let modifiedData = await result.update(data);
     return modifiedData;
   }
 
-  delete(id) {
+  delete(userId) {
     // Delete a record by ID
-    return this.model.destroy({ where: { id } });
+    return this.model.destroy({ where: { userId } });
   }
 
   async readWithAssociations(associatedModel, id = null) {
