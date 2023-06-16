@@ -229,12 +229,10 @@ app.get('/getAgeQuery', bearerAuth, acl('delete'), async (req, res, next)=> {
   }
 });
 
-
 // proof of life
 app.get('/', (req, res, next) => {
   res.status(200).send('Server is alive!!!');
 });
-
 
 // Catchalls
 app.use('*', notFoundHandler);
