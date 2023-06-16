@@ -108,14 +108,14 @@ Update with
 - **Create userData**: `POST /api/userData` - Create a new userData.
 - **Read userData**: `GET /api/userData` - Get all userData resources.
 - **Read One userData**: `GET /api/userData/:id` - Get a specific userData resource by ID.
-- **Update userData**: `PUT /api/userData/:id` - Update a specific resource by ID.
-- **Delete userData**: `DELETE /api/userData/:id` - Delete a specific resource by ID.
+- **Update userData**: `PUT /api/userData/:id` - Update a specific userData resource by ID.
+- **Delete userData**: `DELETE /api/userData/:id` - Delete a specific userData resource by ID.
   
-- **Create checkinData**: `POST /api/checkinData` - Create a new userData.
-- **Read checkinData**: `GET /api/checkinData` - Get all userData resources.
-- **Read One checkinData**: `GET /api/checkinData/:id` - Get a specific userData resource by ID.
-- **Update checkinData**: `PUT /api/checkinData/:id` - Update a specific resource by ID.
-- **Delete checkinData**: `DELETE /api/checkinData/:id` - Delete a specific resource by ID.
+- **Create checkinData**: `POST /api/checkinData` - Create a new checkinData.
+- **Read checkinData**: `GET /api/checkinData` - Get all checkinData resources.
+- **Read One checkinData**: `GET /api/checkinData/:id` - Get a specific checkinData resource by ID.
+- **Update checkinData**: `PUT /api/checkinData/:id` - Update a specific checkinData resource by ID.
+- **Delete checkinData**: `DELETE /api/checkinData/:id` - Delete a specific checkinData resource by ID.
 
 ##### Additional custom routes available in the application are:
 
