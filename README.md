@@ -27,8 +27,9 @@ The problem we’re solving is the need for a secure and efficient database appl
 
 ### Collaborators
 
-- Thanks to ChatGPT for assisting with some code corrections and testing features.
 - Thanks to the Helen House Project Team for giving us the opportunity to work on this incredible project.
+- Thanks to Tylene, Ryan, Sara, & Amanda for the collaborative input
+- Thanks to ChatGPT for assisting with some code corrections and testing features.
 
 ### Setup
 
@@ -97,19 +98,33 @@ To run tests, after running `npm i`, run the command `npm test`. The tests are i
 
 ### Routes
 
-The application provides the following CRUD routes for basic Create, Read, Read One, Update, and Delete operations:
+##### The application provides the following CRUD routes for basic Create, Read, Read One, Update, and Delete operations:
+Update with 
 
-- **Create**: `POST /api/resource` - Create a new resource.
-- **Read**: `GET /api/resource` - Get all resources.
-- **Read One**: `GET /api/resource/:id` - Get a specific resource by ID.
-- **Update**: `PUT /api/resource/:id` - Update a specific resource by ID.
-- **Delete**: `DELETE /api/resource/:id` - Delete a specific resource by ID.
+- **Signup**: `POST /signup` Signup a user
+- **Signin**: `POST /signin` Signin with basic auth
+- **Get Users**: `GET /users` Get all users with Bearer Auth
+  
+- **Create userData**: `POST /api/userData` - Create a new userData.
+- **Read userData**: `GET /api/userData` - Get all userData resources.
+- **Read One userData**: `GET /api/userData/:id` - Get a specific userData resource by ID.
+- **Update userData**: `PUT /api/userData/:id` - Update a specific resource by ID.
+- **Delete userData**: `DELETE /api/userData/:id` - Delete a specific resource by ID.
+  
+- **Create checkinData**: `POST /api/checkinData` - Create a new userData.
+- **Read checkinData**: `GET /api/checkinData` - Get all userData resources.
+- **Read One checkinData**: `GET /api/checkinData/:id` - Get a specific userData resource by ID.
+- **Update checkinData**: `PUT /api/checkinData/:id` - Update a specific resource by ID.
+- **Delete checkinData**: `DELETE /api/checkinData/:id` - Delete a specific resource by ID.
 
-Additional custom routes available in the application are:
+##### Additional custom routes available in the application are:
 
 - **Get Users with UserData**: `GET /UserWithData` - Get all users with associated UserData.
 - **Get Users with CheckinData**: `GET /UserWithCheckin` - Get all users with associated CheckinData.
 - **Get User with CheckinData**: `GET /UserWithCheckin/:id` - Get a specific user with associated CheckinData by ID.
+
+##### Query Routes
+
 - **Checkin Query**: `GET /checkinquery` - Perform a query on check-in data to find the total time all users spent during a single day or date range at Helen House. 
   Be sure to add in a query parameter for:
   - date_start YYYY-MM-DD
@@ -122,8 +137,6 @@ Additional custom routes available in the application are:
   Be sure to add in a query parameter for:
   - date_start YYYY-MM-DD
   - and optional date_end YYYY-MM-DD
-
-Note: Replace `/api/resource` with the appropriate resource endpoint in your application.
 
 ### Testing and Program Flow
 
