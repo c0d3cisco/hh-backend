@@ -13,10 +13,12 @@ const errorHandler = require('./error-handlers/500.js');
 const authRoutes = require('./auth/routes.js');
 const logger = require('./middleware/logger.js');
 // TODO Update Routes
-const Routes = require('./routes/index.js');
+const YouthRoutes = require('./routes/youth.js');
+const AdminRoutes = require('./routes/admin.js');
 const { userAuthModel } = require('./models/index.js');
 const { checkin, users } = require('./models/index.js');
 const { Op } = require('sequelize');
+const verifyUser = require('./verifyUser.js');
 
 // Prepare the express app
 const app = express();
@@ -28,8 +30,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
 // Routes
+// homebrew authenticator // need password
 app.use(authRoutes);
-app.use('/api', Routes);
+app.use('/youth', YouthRoutes);
+
+// auth0 after this point
+app.use(verifyUser);
+app.use('/admin', AdminRoutes);
 
 // TODO Query Routes to be moved to the queries.js inside Route
 // This gets all users that have userData inside the UserData Table
@@ -74,6 +81,7 @@ app.get('/UserWithCheckin/:id', bearerAuth, acl('delete'), async (req, res, next
 // date_start YYYY-MM-DD
 // and optional date_end YYYY-MM-DD
 app.get('/checkinquery', bearerAuth, acl('delete'), async (req, res, next) => {
+
   try {
     let date_start = req.query.date_start;
     let date_end = req.query.date_end;
