@@ -13,12 +13,10 @@ const errorHandler = require('./error-handlers/500.js');
 const authRoutes = require('./auth/routes.js');
 const logger = require('./middleware/logger.js');
 // TODO Update Routes
-const YouthRoutes = require('./routes/youth.js');
-const AdminRoutes = require('./routes/admin.js');
+const Routes = require('./routes/index.js');
 const { userAuthModel } = require('./models/index.js');
 const { checkin, users } = require('./models/index.js');
 const { Op } = require('sequelize');
-const verifyUser = require('./verifyUser.js');
 
 // Prepare the express app
 const app = express();
@@ -29,18 +27,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
+//auth0 code
+const checkJwt = require('./auth/middleware/auth0');
+
 // Routes
 // homebrew authenticator // need password
 app.use(authRoutes);
-app.use('/youth', YouthRoutes);
+app.use('/api', Routes);
 
-// auth0 after this point
-app.use(verifyUser);
-app.use('/admin', AdminRoutes);
 
 // TODO Query Routes to be moved to the queries.js inside Route
 // This gets all users that have userData inside the UserData Table
-app.get('/UserWithData', bearerAuth, acl('delete'), async (req, res, next) => {
+app.get('/UserWithData', checkJwt, async (req, res, next) => {
   // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(users);
@@ -52,7 +50,7 @@ app.get('/UserWithData', bearerAuth, acl('delete'), async (req, res, next) => {
 });
 
 // This gets all users that have checkIn data inside the CheckinData Table
-app.get('/UserWithCheckin', bearerAuth, acl('delete'), async (req, res, next) => {
+app.get('/UserWithCheckin', checkJwt, async (req, res, next) => {
   // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(checkin);
@@ -64,7 +62,7 @@ app.get('/UserWithCheckin', bearerAuth, acl('delete'), async (req, res, next) =>
 });
 
 // This gets a single user that has checkIn data inside the CheckinData Table, by ID
-app.get('/UserWithCheckin/:id', bearerAuth, acl('delete'), async (req, res, next) => {
+app.get('/UserWithCheckin/:id', checkJwt, async (req, res, next) => {
   // const user = await userAuth.findAll({include: {model: userData}});
   try {
     const user = await userAuthModel.readWithAssociations(checkin, req.params.id);
@@ -80,7 +78,7 @@ app.get('/UserWithCheckin/:id', bearerAuth, acl('delete'), async (req, res, next
 // Be sure to add in a query parameter for
 // date_start YYYY-MM-DD
 // and optional date_end YYYY-MM-DD
-app.get('/checkinquery', bearerAuth, acl('delete'), async (req, res, next) => {
+app.get('/checkinquery', checkJwt, async (req, res, next) => {
 
   try {
     let date_start = req.query.date_start;
@@ -125,7 +123,7 @@ app.get('/checkinquery', bearerAuth, acl('delete'), async (req, res, next) => {
 // Be sure to add in a query parameter for
 // date_start YYYY-MM-DD
 // and optional date_end YYYY-MM-DD
-app.get('/checkinquery/:id', bearerAuth, acl('delete'), async (req, res, next) => {
+app.get('/checkinquery/:id', checkJwt, async (req, res, next) => {
   try {
     let date_start = req.query.date_start;
     let date_end = req.query.date_end;
@@ -149,7 +147,7 @@ app.get('/checkinquery/:id', bearerAuth, acl('delete'), async (req, res, next) =
 // Be sure to add in a query parameter for
 // date_start YYYY-MM-DD
 // and optional date_end YYYY-MM-DD
-app.get('/checkinAverage', bearerAuth, acl('delete'), async (req, res, next) => {
+app.get('/checkinAverage', checkJwt, async (req, res, next) => {
   try {
     let date_start = req.query.date_start;
     let date_end = req.query.date_end;
@@ -198,7 +196,7 @@ app.get('/checkinAverage', bearerAuth, acl('delete'), async (req, res, next) => 
 
 // This is our fourth checkin Query to number of members below 13, between 13 and 18. over 18
 
-app.get('/getAgeQuery', bearerAuth, acl('delete'), async (req, res, next)=> {
+app.get('/getAgeQuery', checkJwt, async (req, res, next)=> {
   try{
     const users13Under = await users.count({
       where:{
