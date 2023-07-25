@@ -15,7 +15,7 @@ const logger = require('./middleware/logger.js');
 // TODO Update Routes
 const Routes = require('./routes/index.js');
 const { userAuthModel } = require('./models/index.js');
-const { checkin, users } = require('./models/index.js');
+const { checkin, users, userAuth } = require('./models/index.js');
 const { Op } = require('sequelize');
 
 // Prepare the express app
@@ -30,16 +30,20 @@ app.use(logger);
 //auth0 code
 const { checkJwt } = require('./auth/middleware/auth0');
 
-// app.get('/checkUser', checkJwt, async (req, res, next) => {
-//   // const user = await userAuth.findAll({include: {model: userData}});
-//   try {
-//     const user = await users.findAll({where: {username: req.body}});
-//     res.status(200).send(user);
-//   } catch (error) {
-//     console.error(error.message || error);
-//     res.status(500).send('error getting UserWithData');
-//   }
-// });
+app.post('/checkUser', async (req, res, next) => {
+
+  try {
+    console.log('TEST pass', req.body);
+    const user = await userAuth.findAll( {where: { username: req.body.username } });
+    res.status(200).send(user);
+
+  } catch (error) {
+    console.log('TEST fail', req.body);
+    console.error(error.message || error);
+    res.status(500).send('error getting user');
+  }
+
+});
 // Routes
 // homebrew authenticator // need password
 app.use(authRoutes);
