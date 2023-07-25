@@ -4,10 +4,10 @@
 require('dotenv').config();
 const app = require('./src/server.js');
 const { db } = require('./src/models');
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 db.sync().then(() => {
-  app.start(PORT || 3001);
+  app.start(PORT || 3003);
 });
 
 // ! This function clears your local DB

@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
 //auth0 code
-const checkJwt = require('./auth/middleware/auth0');
+const { checkJwt } = require('./auth/middleware/auth0');
 
 // Routes
 // homebrew authenticator // need password
