@@ -5,8 +5,8 @@ const { Sequelize, DataTypes } = require('sequelize');
 const pg = require('pg');
 const userModel = require('./userData/model.js');
 
-const userModelSaved = require('./userData/model-secure.js');
-const userModelTemp = require('./userData/model-basic.js');
+// const userModelSaved = require('./userData/model-secure.js');
+// const userModelTemp = require('./userData/model-basic.js');
 const checkinModel = require('./checkin/model.js');
 const userAuthModel = require('../auth/models/users.js');
 const Collection = require('./data-collection.js');
@@ -23,9 +23,9 @@ const checkin = checkinModel(sequelize, DataTypes);
 const users = userModel(sequelize, DataTypes);
 
 //! THESE ARE THE NEW WRAPPED MODELS WITH SEQUELIZE HOOKS ONLY
-const userDataSaved = userModelSaved(sequelize, DataTypes);
+// const userDataSaved = userModelSaved(sequelize, DataTypes);
 
-const userDataTemp = userModelTemp(sequelize, DataTypes);
+// const userDataTemp = userModelTemp(sequelize, DataTypes);
 
 // Define the userAuth model using the userAuthModel function
 const userAuth = userAuthModel(sequelize, DataTypes);

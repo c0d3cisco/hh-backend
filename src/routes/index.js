@@ -25,21 +25,38 @@ router.param('model', (req, res, next) => {
   }
 });
 
+
+// // Handler for GET all records
+// router.get('/:model', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleGetAll);
+
+// // Handler for GET a single record by ID
+// router.get('/:model/:id', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleGetOne);
+
+// // Handler for creating a new record
+// router.post('/:model', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleCreate);
+
+// // Handler for updating an existing record
+// router.put('/:model/:id', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleUpdate);
+
+// // Handler for deleting an existing record
+
+// router.delete('/:model/:id', checkJwt, checkRequiredPermissions(['delete:admin-messages']), handleDelete);
+
 // Handler for GET all records
-router.get('/:model', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleGetAll);
+router.get('/:model', checkJwt, handleGetAll);
 
 // Handler for GET a single record by ID
-router.get('/:model/:id', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleGetOne);
+router.get('/:model/:id', checkJwt, handleGetOne);
 
 // Handler for creating a new record
-router.post('/:model', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleCreate);
+router.post('/:model', checkJwt, handleCreate);
 
 // Handler for updating an existing record
-router.put('/:model/:id', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleUpdate);
+router.put('/:model/:id', checkJwt, handleUpdate);
 
 // Handler for deleting an existing record
 
-router.delete('/:model/:id', checkJwt, checkRequiredPermissions(['delete:admin-messages']), handleDelete);
+router.delete('/:model/:id', checkJwt, checkRequiredPermissions(['read:admin-messages']), handleDelete);
 
 // FOR TESTING WITHOUT AUTH
 // router.get('/:model', handleGetAll);

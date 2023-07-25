@@ -8,41 +8,35 @@ const SECRET = process.env.SECRET || 'secretstring';
 const userModel = (sequelize, DataTypes) => {
   // Define the 'users' model
   const model = sequelize.define('users', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.STRING,
-    },
     username: { type: DataTypes.STRING, allowNull: false, unique: true },
-    // password: { type: DataTypes.STRING, allowNull: false },
-    role: { type: DataTypes.ENUM('user', 'staff', 'admin'), allowNull: false, defaultValue: 'user'},
-    // token: {
-    //   // Virtual field for generating and storing JWT token
-    //   type: DataTypes.VIRTUAL,
-    //   get() {
-    //     // Generate a JWT token containing the username
-    //     return jwt.sign({ username: this.username }, SECRET);
-    //   },
-    //   set(tokenObj) {
-    //     // Setter function for the token field
-    //     let token = jwt.sign(tokenObj, SECRET);
-    //     return token;
-    //   },
-    // },
-    // capabilities: {
-    //   // Virtual field for defining user capabilities based on their role
-    //   type: DataTypes.VIRTUAL,
-    //   get() {
-    //     const acl = {
-    //       user: ['create', 'update'],
-    //       staff: ['read', 'create', 'update'],
-    //       admin: ['read', 'create', 'update', 'delete'],
-    //     };
-    //     // Return the capabilities based on the user's role
-    //     return acl[this.role];
-    //   },
-    // },
+    password: { type: DataTypes.STRING, allowNull: true },
+    role: { type: DataTypes.ENUM('user', 'staff', 'admin'), allowNull: true, defaultValue: 'user'},
+    token: {
+      // Virtual field for generating and storing JWT token
+      type: DataTypes.VIRTUAL,
+      get() {
+        // Generate a JWT token containing the username
+        return jwt.sign({ username: this.username }, SECRET);
+      },
+      set(tokenObj) {
+        // Setter function for the token field
+        let token = jwt.sign(tokenObj, SECRET);
+        return token;
+      },
+    },
+    capabilities: {
+      // Virtual field for defining user capabilities based on their role
+      type: DataTypes.VIRTUAL,
+      get() {
+        const acl = {
+          user: ['create', 'update'],
+          staff: ['read', 'create', 'update'],
+          admin: ['read', 'create', 'update', 'delete'],
+        };
+        // Return the capabilities based on the user's role
+        return acl[this.role];
+      },
+    },
   });
 
   // Before creating a user, hash the password

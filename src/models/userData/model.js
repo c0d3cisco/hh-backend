@@ -1,7 +1,8 @@
 'use strict';
 
-const userModel = (sequelize, DataTypes) => sequelize.define('userDataTEMP', {
-  userId: {type: DataTypes.string, allowNull: false, unique: true},
+const userModel = (sequelize, DataTypes) => sequelize.define('userData', {
+  userId: {type: DataTypes.INTEGER, allowNull: false, unique: true},
+  approved: {type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false},
   first_name: { type: DataTypes.STRING, allowNull: false },
   last_name: { type: DataTypes.STRING, allowNull: false },
   preferred_name: { type: DataTypes.STRING, allowNull: true },

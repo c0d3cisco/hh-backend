@@ -30,6 +30,16 @@ app.use(logger);
 //auth0 code
 const { checkJwt } = require('./auth/middleware/auth0');
 
+// app.get('/checkUser', checkJwt, async (req, res, next) => {
+//   // const user = await userAuth.findAll({include: {model: userData}});
+//   try {
+//     const user = await users.findAll({where: {username: req.body}});
+//     res.status(200).send(user);
+//   } catch (error) {
+//     console.error(error.message || error);
+//     res.status(500).send('error getting UserWithData');
+//   }
+// });
 // Routes
 // homebrew authenticator // need password
 app.use(authRoutes);

@@ -15,17 +15,24 @@ const checkRequiredPermissions = (requiredPermissions) => {
       );
 
       if (!hasPermissions) {
+
         throw new InsufficientScopeError();
+
       }
 
       return hasPermissions;
+
     });
 
     permissionCheck(req, res, next);
+
   };
 };
 
 module.exports = {
+
   checkJwt,
+
   checkRequiredPermissions,
+
 };
