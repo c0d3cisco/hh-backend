@@ -1,4 +1,4 @@
-# Mid-Term CodeFellows 401 Project
+# Final CodeFellows 401 Project
 
 ## Project: Helen House Application: Backend
 
