@@ -45,7 +45,6 @@ describe('Auth router', () => {
     );
 
     // used for additional auth route test /secret
-
     authToken = response.body.user.token;
     expect(response.status).toEqual(200);
     expect(response.body.user.username).toEqual('RegularUser');

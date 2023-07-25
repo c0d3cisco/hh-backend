@@ -26,10 +26,6 @@ afterAll(async () => {
   await db.drop();
 });
 
-// describe('Placeholder for tests', () => {
-//   it.todo('Add tests');
-// });
-
 describe('ACL Integration', () => {
 
   it('does not allow User role to access /users', async () => {

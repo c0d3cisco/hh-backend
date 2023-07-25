@@ -2,7 +2,7 @@
 
 //Imports
 const { Sequelize, DataTypes } = require('sequelize');
-const pg = require('pg');
+// const pg = require('pg');
 const userModel = require('./userData/model.js');
 
 // const userModelSaved = require('./userData/model-secure.js');
