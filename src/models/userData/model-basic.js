@@ -63,7 +63,7 @@ const userModel = (sequelize, DataTypes) => sequelize.define('userDataTEMP', {
   englishAtHome: { type: DataTypes.ENUM(['No', 'Yes-If yes, which language?']), allowNull: true },
   englishAtHome_other: { type: DataTypes.STRING, allowNull: true },
   q3: { type: DataTypes.STRING, allowNull: true },// What health conditions should we know about? For example, do you have allergies, dietary restrictions, are you taking medications you feel we should know about, have a medical condition that requires attention, etc.; or do you need accommodations due to a disability?
-  q4: { type: DataTypes.STRING, allowNull: true }, // We work with youth from a wide variety of backgrounds who bring a variety of experiences. We would like to know more about your experiences and background:
+  // q4: { type: DataTypes.STRING, allowNull: true },  We work with youth from a wide variety of backgrounds who bring a variety of experiences. We would like to know more about your experiences and background:
   safePlace: { type: DataTypes.ENUM(['Yes', 'No']), allowNull: true },
   q5: { type: DataTypes.ENUM(['Yes', 'No']), allowNull: true }, // Have you ever or are you currently experiencing homelessness (i.e. couch surfing, camping, car sleeping, staying with friends, etc.)?
   q6: { type: DataTypes.ENUM(['Yes', 'No']), allowNull: true }, // When you are hungry do you have enough food to eat?

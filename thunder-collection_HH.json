@@ -1,0 +1,165 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "HH",
+    "dateExported": "2023-06-14T20:53:18.669Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "2e3ba998-f860-490e-8b83-98a0c0835345",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "signup",
+            "url": "http://localhost:3001/signup",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-06-14T14:01:09.744Z",
+            "modified": "2023-06-14T18:47:42.740Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"Cisco\",\n  \"password\": \"pass\",\n  \"role\": \"user\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "93a75933-5955-4828-abf5-0be4fd5531e2",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "user data ",
+            "url": "http://localhost:3001/api/userData",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-06-14T14:03:41.491Z",
+            "modified": "2023-06-14T18:47:56.621Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Martinez\",\n    \"preferred_name\": \"AM\",\n    \"date_of_birth\": \"1992-04-10\",\n    \"pronouns\": \"they/them\",\n    \"em_name\": \"Emergency Contact 1\",\n    \"em_relationship\": \"Friend\",\n    \"em_phone\": \"123-456-7890\",\n    \"em_knowledge\": \"Yes\",\n    \"em_name2\": \"Emergency Contact 2\",\n    \"em_relationship2\": \"Partner\",\n    \"em_phone2\": \"987-654-3210\",\n    \"em_knowledge2\": \"No\",\n    \"q1\": \"Female\",\n    \"q1_other\": null,\n    \"q2\": \"Bisexual\",\n    \"q2_other\": null,\n    \"email\": \"alexmartinez@example.com\",\n    \"phone\": \"555-246-8135\",\n    \"contact\": \"Phone\",\n    \"ethnicity\": \"Japanese\",\n    \"ethnicity_other\": null,\n    \"englishUnderstanding\": \"Fluent\",\n    \"englishUnderstanding_other\": null,\n    \"englishAtHome\": \"Yes\",\n    \"englishAtHome_other\": null,\n    \"q3\": \"No specific health conditions\",\n    \"q4\": \"I have a diverse background\",\n    \"safePlace\": \"Yes\",\n    \"q5\": \"No\",\n    \"q6\": \"Yes\",\n    \"q7\": \"Yes\",\n    \"q8\": \"Yes\",\n    \"q9\": \"Yes\",\n    \"school\": \"Sample School\",\n    \"q10\": \"No\",\n    \"q11\": \"No\",\n    \"q12\": \"No\",\n    \"q13\": \"No\",\n    \"q14\": \"No\",\n    \"q15\": \"No\",\n    \"q16\": \"No\",\n    \"q17\": \"No\",\n    \"q18\": \"No\",\n    \"q19\": \"Yes\",\n    \"q20\": \"Problems with Family\",\n    \"q20_other\": null,\n    \"q21\": \"Friend\",\n    \"q21_other\": null,\n    \"q22\": \"4\",\n    \"q23\": \"3\",\n    \"q24\": \"A leader\",\n    \"q24_other\": null,\n    \"q25\": \"Be kind to others\",\n    \"intakeStaff\": \"staff5\",\n    \"intakeDate\": \"2023-06-12\",\n    \"intakeNotes\": \"Sample intake notes\",\n    \"userId\": 1\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "7f71009a-2197-4ad6-80ba-659242dac31d",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "user data",
+            "url": "http://localhost:3001/api/userData/1",
+            "method": "PUT",
+            "sortNum": 32500,
+            "created": "2023-06-14T18:40:17.392Z",
+            "modified": "2023-06-14T18:49:44.523Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Martinez2\",\n    \"preferred_name\": \"AM\",\n    \"date_of_birth\": \"1992-04-10\",\n    \"pronouns\": \"they/them\",\n    \"em_name\": \"Emergency Contact 1\",\n    \"em_relationship\": \"Friend\",\n    \"em_phone\": \"123-456-7890\",\n    \"em_knowledge\": \"Yes\",\n    \"em_name2\": \"Emergency Contact 2\",\n    \"em_relationship2\": \"Partner\",\n    \"em_phone2\": \"987-654-3210\",\n    \"em_knowledge2\": \"No\",\n    \"q1\": \"Female\",\n    \"q1_other\": null,\n    \"q2\": \"Bisexual\",\n    \"q2_other\": null,\n    \"email\": \"alexmartinez@example.com\",\n    \"phone\": \"555-246-8135\",\n    \"contact\": \"Phone\",\n    \"ethnicity\": \"Japanese\",\n    \"ethnicity_other\": null,\n    \"englishUnderstanding\": \"Fluent\",\n    \"englishUnderstanding_other\": null,\n    \"englishAtHome\": \"Yes\",\n    \"englishAtHome_other\": null,\n    \"q3\": \"No specific health conditions\",\n    \"q4\": \"I have a diverse background\",\n    \"safePlace\": \"Yes\",\n    \"q5\": \"No\",\n    \"q6\": \"Yes\",\n    \"q7\": \"Yes\",\n    \"q8\": \"Yes\",\n    \"q9\": \"Yes\",\n    \"school\": \"Sample School\",\n    \"q10\": \"No\",\n    \"q11\": \"No\",\n    \"q12\": \"No\",\n    \"q13\": \"No\",\n    \"q14\": \"No\",\n    \"q15\": \"No\",\n    \"q16\": \"No\",\n    \"q17\": \"No\",\n    \"q18\": \"No\",\n    \"q19\": \"Yes\",\n    \"q20\": \"Problems with Family\",\n    \"q20_other\": null,\n    \"q21\": \"Friend\",\n    \"q21_other\": null,\n    \"q22\": \"4\",\n    \"q23\": \"3\",\n    \"q24\": \"A leader\",\n    \"q24_other\": null,\n    \"q25\": \"Be kind to others\",\n    \"intakeStaff\": \"staff5\",\n    \"intakeDate\": \"2023-06-12\",\n    \"intakeNotes\": \"Sample intake notes\",\n    \"userId\": 1\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f7308c1b-aebe-427d-a2ee-5b7f01e988ae",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "user data",
+            "url": "http://localhost:3001/api/userData/1",
+            "method": "DELETE",
+            "sortNum": 33750,
+            "created": "2023-06-14T18:49:25.478Z",
+            "modified": "2023-06-14T18:49:25.478Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Martinez2\",\n    \"preferred_name\": \"AM\",\n    \"date_of_birth\": \"1992-04-10\",\n    \"pronouns\": \"they/them\",\n    \"em_name\": \"Emergency Contact 1\",\n    \"em_relationship\": \"Friend\",\n    \"em_phone\": \"123-456-7890\",\n    \"em_knowledge\": \"Yes\",\n    \"em_name2\": \"Emergency Contact 2\",\n    \"em_relationship2\": \"Partner\",\n    \"em_phone2\": \"987-654-3210\",\n    \"em_knowledge2\": \"No\",\n    \"q1\": \"Female\",\n    \"q1_other\": null,\n    \"q2\": \"Bisexual\",\n    \"q2_other\": null,\n    \"email\": \"alexmartinez@example.com\",\n    \"phone\": \"555-246-8135\",\n    \"contact\": \"Phone\",\n    \"ethnicity\": \"Japanese\",\n    \"ethnicity_other\": null,\n    \"englishUnderstanding\": \"Fluent\",\n    \"englishUnderstanding_other\": null,\n    \"englishAtHome\": \"Yes\",\n    \"englishAtHome_other\": null,\n    \"q3\": \"No specific health conditions\",\n    \"q4\": \"I have a diverse background\",\n    \"safePlace\": \"Yes\",\n    \"q5\": \"No\",\n    \"q6\": \"Yes\",\n    \"q7\": \"Yes\",\n    \"q8\": \"Yes\",\n    \"q9\": \"Yes\",\n    \"school\": \"Sample School\",\n    \"q10\": \"No\",\n    \"q11\": \"No\",\n    \"q12\": \"No\",\n    \"q13\": \"No\",\n    \"q14\": \"No\",\n    \"q15\": \"No\",\n    \"q16\": \"No\",\n    \"q17\": \"No\",\n    \"q18\": \"No\",\n    \"q19\": \"Yes\",\n    \"q20\": \"Problems with Family\",\n    \"q20_other\": null,\n    \"q21\": \"Friend\",\n    \"q21_other\": null,\n    \"q22\": \"4\",\n    \"q23\": \"3\",\n    \"q24\": \"A leader\",\n    \"q24_other\": null,\n    \"q25\": \"Be kind to others\",\n    \"intakeStaff\": \"staff5\",\n    \"intakeDate\": \"2023-06-12\",\n    \"intakeNotes\": \"Sample intake notes\",\n    \"userId\": 1\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "18f24241-6361-43bd-96cb-b82e562de00a",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "user data",
+            "url": "http://localhost:3001/api/userData",
+            "method": "GET",
+            "sortNum": 35000,
+            "created": "2023-06-14T14:33:20.927Z",
+            "modified": "2023-06-14T14:34:11.427Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "0d4bc7b5-9fe2-4bd3-88e4-8ba54667f26c",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "checkin",
+            "url": "http://localhost:3001/api/checkin",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-06-14T14:29:39.163Z",
+            "modified": "2023-06-14T18:37:38.376Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"timeIn\": \"2023-06-13T22:06:09.649Z\",\n  \"timeOut\": \"2023-06-13T22:07:09.649Z\",\n  \"moodIn\": \"1 - Terrible\",\n  \"moodOut\": \"5 - Excellent\",\n  \"userId\": 1\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "70c86f04-a5ca-4827-860f-811e29a19e7c",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "checkin",
+            "url": "http://localhost:3001/api/userData",
+            "method": "GET",
+            "sortNum": 45000,
+            "created": "2023-06-14T14:34:32.488Z",
+            "modified": "2023-06-14T14:34:48.569Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"first_name\": \"Alex\",\n    \"last_name\": \"Martinez\",\n    \"preferred_name\": \"AM\",\n    \"date_of_birth\": \"1992-04-10\",\n    \"pronouns\": \"they/them\",\n    \"em_name\": \"Emergency Contact 1\",\n    \"em_relationship\": \"Friend\",\n    \"em_phone\": \"123-456-7890\",\n    \"em_knowledge\": \"Yes\",\n    \"em_name2\": \"Emergency Contact 2\",\n    \"em_relationship2\": \"Partner\",\n    \"em_phone2\": \"987-654-3210\",\n    \"em_knowledge2\": \"No\",\n    \"q1\": \"Female\",\n    \"q1_other\": null,\n    \"q2\": \"Bisexual\",\n    \"q2_other\": null,\n    \"email\": \"alexmartinez@example.com\",\n    \"phone\": \"555-246-8135\",\n    \"contact\": \"Phone\",\n    \"ethnicity\": \"Japanese\",\n    \"ethnicity_other\": null,\n    \"englishUnderstanding\": \"Fluent\",\n    \"englishUnderstanding_other\": null,\n    \"englishAtHome\": \"Yes\",\n    \"englishAtHome_other\": null,\n    \"q3\": \"No specific health conditions\",\n    \"q4\": \"I have a diverse background\",\n    \"safePlace\": \"Yes\",\n    \"q5\": \"No\",\n    \"q6\": \"Yes\",\n    \"q7\": \"Yes\",\n    \"q8\": \"Yes\",\n    \"q9\": \"Yes\",\n    \"school\": \"Sample School\",\n    \"q10\": \"No\",\n    \"q11\": \"No\",\n    \"q12\": \"No\",\n    \"q13\": \"No\",\n    \"q14\": \"No\",\n    \"q15\": \"No\",\n    \"q16\": \"No\",\n    \"q17\": \"No\",\n    \"q18\": \"No\",\n    \"q19\": \"Yes\",\n    \"q20\": \"Problems with Family\",\n    \"q20_other\": null,\n    \"q21\": \"Friend\",\n    \"q21_other\": null,\n    \"q22\": \"4\",\n    \"q23\": \"3\",\n    \"q24\": \"A leader\",\n    \"q24_other\": null,\n    \"q25\": \"Be kind to others\",\n    \"intakeStaff\": \"staff5\",\n    \"intakeDate\": \"2023-06-12\",\n    \"intakeNotes\": \"Sample intake notes\",\n    \"userId\": 2\n  }",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "8d4e3873-79b1-4497-8392-8f7c68c03e0b",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "user with data",
+            "url": "http://localhost:3001/UserWithData",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-06-14T14:31:51.702Z",
+            "modified": "2023-06-14T18:49:04.424Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5921c434-4092-4903-9d5f-f0278c2b12de",
+            "colId": "96a2ea6d-a97e-4a58-b1e2-ef64b8dbb48d",
+            "containerId": "",
+            "name": "user with checkin",
+            "url": "http://localhost:3001/UserWithCheckin/1",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-06-14T14:34:28.690Z",
+            "modified": "2023-06-14T18:41:03.283Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
