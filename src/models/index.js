@@ -47,6 +47,4 @@ module.exports = {
   userData: new Collection(users), // Data collection for users model
   userAuth, // UserAuth model
   userAuthModel: new Collection(userAuth), // Data collection for userAuth model
-
-
 };
