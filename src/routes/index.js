@@ -8,6 +8,8 @@ const dataModules = require('../models');
 const basicAuth = require('../auth/middleware/basic');
 const bearerAuth = require('../auth/middleware/bearer');
 const acl = require('../auth/middleware/acl');
+const checkJwt = require('../auth/middleware/auth0');
+
 
 const router = express.Router();
 
@@ -24,20 +26,20 @@ router.param('model', (req, res, next) => {
 });
 
 // Handler for GET all records
-router.get('/:model', bearerAuth, handleGetAll);
+router.get('/:model', checkJwt, handleGetAll);
 
 // Handler for GET a single record by ID
-router.get('/:model/:id', bearerAuth, handleGetOne);
+router.get('/:model/:id', checkJwt, handleGetOne);
 
 // Handler for creating a new record
-router.post('/:model', bearerAuth, acl('create'), handleCreate);
+router.post('/:model', checkJwt, handleCreate);
 
 // Handler for updating an existing record
-router.put('/:model/:id', bearerAuth, acl('update'), handleUpdate);
+router.put('/:model/:id', checkJwt, handleUpdate);
 
 // Handler for deleting an existing record
 
-router.delete('/:model/:id', bearerAuth, acl('delete'), handleDelete);
+router.delete('/:model/:id', checkJwt, handleDelete);
 
 // FOR TESTING WITHOUT AUTH
 // router.get('/:model', handleGetAll);
