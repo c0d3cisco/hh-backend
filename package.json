@@ -38,6 +38,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^3.0.1",
     "pg": "^8.11.0",
+    "request": "^2.88.2",
     "sequelize": "^6.32.0",
     "sequelize-cli": "^6.2.0",
     "sqlite3": "^5.0.2",
