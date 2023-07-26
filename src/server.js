@@ -99,6 +99,9 @@ app.get('/checkinquery', checkJwt, async (req, res, next) => {
     let date_end = req.query.date_end;
     const checkins = await checkin.findAll({
       where: {
+        timeOut: {
+          [Op.not]: null,
+        },
         timeIn: {
           [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
           [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
@@ -163,12 +166,16 @@ app.get('/checkinquery/:id', checkJwt, async (req, res, next) => {
     const checkins = await checkin.findAll({
       where: {
         userId: req.params.id,
+        timeOut: {
+          [Op.not]: null,
+        },
         timeIn: {
           [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
           [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
         },
       },
     });
+    res.status(200).send(checkins);
   } catch (error) {
     console.log(error.message || error);
     res.status(500).send('error getting checkinquery with ID');
@@ -186,6 +193,9 @@ app.get('/checkinAverage', checkJwt, async (req, res, next) => {
     let date_end = req.query.date_end;
     const checkins = await checkin.findAll({
       where: {
+        timeOut: {
+          [Op.not]: null,
+        },
         timeIn: {
           [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
           [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
