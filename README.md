@@ -80,8 +80,8 @@ To use Postgres and SQLite databases with the application, please follow the ste
     "dialect": "mysql"
    }
    ```
-   
-4. Update the `.env` file with the SQLite database path so it follows this format
+
+4. Update the `.eclenv` file with the SQLite database path so it follows this format
    ```
    PORT=3001
    DATABASE_URL=postgres://localhost:5432/helen_house_backend
@@ -99,18 +99,18 @@ To run tests, after running `npm i`, run the command `npm test`. The tests are i
 ### Routes
 
 ##### The application provides the following CRUD routes for basic Create, Read, Read One, Update, and Delete operations:
-Update with 
+Update with
 
 - **Signup**: `POST /signup` Signup a user
 - **Signin**: `POST /signin` Signin with basic auth
 - **Get Users**: `GET /users` Get all users with Bearer Auth
-  
+
 - **Create userData**: `POST /api/userData` - Create a new userData.
 - **Read userData**: `GET /api/userData` - Get all userData resources.
 - **Read One userData**: `GET /api/userData/:id` - Get a specific userData resource by ID.
 - **Update userData**: `PUT /api/userData/:id` - Update a specific userData resource by ID.
 - **Delete userData**: `DELETE /api/userData/:id` - Delete a specific userData resource by ID.
-  
+
 - **Create checkinData**: `POST /api/checkinData` - Create a new checkinData.
 - **Read checkinData**: `GET /api/checkinData` - Get all checkinData resources.
 - **Read One checkinData**: `GET /api/checkinData/:id` - Get a specific checkinData resource by ID.
@@ -125,7 +125,7 @@ Update with
 
 ##### Query Routes
 
-- **Checkin Query**: `GET /checkinquery` - Perform a query on check-in data to find the total time all users spent during a single day or date range at Helen House. 
+- **Checkin Query**: `GET /checkinquery` - Perform a query on check-in data to find the total time all users spent during a single day or date range at Helen House.
   Be sure to add in a query parameter for:
   - date_start YYYY-MM-DD
   - and optional date_end YYYY-MM-DD
@@ -150,8 +150,8 @@ The application allows users to log in and post information to either the Checki
 
 #### Data Flow
 
-1. Users sign up and their username is stored in the `users` table. 
-2. Users enter their personal information into the `userData` table 
+1. Users sign up and their username is stored in the `users` table.
+2. Users enter their personal information into the `userData` table
 3. Users log in and update the Checkin Database Table with their check-in information.
 4. Admins can log in and query the user, userData and checkinData tables to retrieve data based on their search criteria.
 
