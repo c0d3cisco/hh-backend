@@ -131,6 +131,25 @@ app.get('/checkinquery', checkJwt, async (req, res, next) => {
   }
 });
 
+// This is our update checkin Query to update the checkin with the timeOut
+
+app.put('/checkinUpdate/:id', checkJwt, async (req, res, next) => {
+  try {
+    const checkins = await checkin.findOne({
+      where: {
+        id: req.params.id,
+        // moodOut: null,
+      },
+    });
+    const updatedCheckin = await checkins.update(req.body);
+    console.log(req.body);
+    res.status(200).send(updatedCheckin);
+  } catch (error) {
+    console.log(error.message || error);
+    res.status(500).send('error getting checkin with ID');
+  }
+});
+
 // This is our second checkin Query to find the total time a single user during a single day at Helen House. You can also send a 2nd date to see the the range between the two dates
 
 // Be sure to add in /id to the end of the url
