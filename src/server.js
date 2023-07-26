@@ -278,6 +278,34 @@ app.get('/getAgeQuery', checkJwt, async (req, res, next)=> {
   }
 });
 
+// Query for Dashboard: Total Daily Check-ins (# of unique users)
+
+app.get('/totalDailyCheckins', checkJwt, async (req, res, next) => {
+  try {
+    let date_start = req.query.date_start;
+    let date_end = req.query.date_end;
+    const checkinCount = await checkin.count({
+      distinct: true,
+      col: 'userId',
+      where: {
+        timeOut: {
+          [Op.not]: null,
+        },
+        timeIn: {
+          [Op.gt]: new Date(`${date_start}T00:00:00.000Z`),
+          [Op.lt]: new Date(`${date_end ? date_end : date_start}T23:59:59.999Z`),
+        },
+      },
+    });
+
+    res.status(200).send({uniqueCheckinUsers: checkinCount});
+  } catch (error) {
+    console.log(error.message || error);
+    res.status(500).send('Error getting unique user checkin count');
+  }
+});
+
+
 // proof of life
 app.get('/', (req, res, next) => {
   res.status(200).send('Server is alive!!!');
